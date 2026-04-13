@@ -4,6 +4,7 @@
 > 🇬🇧 **High-Performance FPGA + MCU Motion Control & Data Acquisition Card**  
 > Nhà sản xuất / Manufacturer: **HBQ Technology** · Rev 2.0 · 01/2026  
 > 🌐 [www.hbqtechnology.com](http://www.hbqtechnology.com)
+![PCB](PCB.jpg)
 
 ---
 
