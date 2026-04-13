@@ -34,6 +34,8 @@
 
 🇬🇧 The **HBQ PCIe Base Card V2.0** is a multi-axis motion control and data acquisition PCIe/PXI add-in card combining a Xilinx Artix-7 FPGA with an STM32H7 MCU. It delivers real-time servo/stepper control, high-precision analog I/O, isolated digital I/O, and industrial fieldbus — accessible from a host PC via PCIe x4 or USB 3.0.
 
+![PCB](PCB.jpg)
+
 | Thông số / Parameter | Giá trị / Specification |
 |----------------------|------------------------|
 | **Form Factor** | PCIe Full-Height · PXI Hybrid Slot compatible |
