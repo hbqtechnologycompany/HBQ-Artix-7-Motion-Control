@@ -22,9 +22,11 @@
 | 9 | [Kiến trúc nguồn](#9-kiến-trúc-nguồn--power-architecture) | Power Architecture |
 | 10 | [**Connector CN10 — Cấp nguồn Backplane**](#10-connector-cn10--backplane-power-supply) | CN10 Backplane Power |
 | 11 | [**Connector J7A — I/O 100 chân**](#11-connector-j7a--100-pin-field-io) | J7A 100-Pin I/O |
-| 12 | [Ứng dụng](#12-ứng-dụng--applications) | Applications |
-| 13 | [Sơ đồ khối](#13-sơ-đồ-khối--block-diagram) | Block Diagram |
-| 14 | [Lập trình & Debug](#14-lập-trình--debug) | Programming & Debug |
+| 12 | [**Phân bổ chân FPGA (Pin Assignment)**](#12-phân-bổ-chân-fpga--fpga-pin-assignment) | FPGA Pin Assignment |
+| 13 | [Ứng dụng](#13-ứng-dụng--applications) | Applications |
+| 14 | [Sơ đồ khối](#14-sơ-đồ-khối--block-diagram) | Block Diagram |
+| 15 | [**Hướng dẫn phát triển Vivado**](#15-hướng-dẫn-phát-triển-vivado--vivado-development-guide) | Vivado Dev Guide |
+| 16 | [Lập trình & Debug](#16-lập-trình--debug) | Programming & Debug |
 
 ---
 
@@ -253,6 +255,12 @@ Cách ly qua / Isolated via: **ISO7740FDBQR** × 4 IC · 2500 VRMS · 150 Mbps
 | 12V_LDO | L78M12 | ~200mA | DAC analog, op-amp rails |
 | 5V_ADC | 5V (jumper) | ~100mA | AD7606C AVCC |
 
+#### Nguồn cách ly cho I/O (Isolated I/O Power)
+Để sử dụng Digital Input/Output cách ly trên connector J7A, người dùng **bắt buộc** phải cấp nguồn ngoài (5–30V DC) vào các chân chuyên dụng:
+- **IN_ISOV+ / IN_ISOGND**: Cấp nguồn cho khối 8 DI.
+- **OUT_ISOV+ / OUT_ISOGND**: Cấp nguồn cho khối 8 DO.
+> ⚠️ **Lưu ý:** Hai khối này có GND cách ly hoàn toàn với nhau và với board chính.
+
 ---
 
 ## 10. Connector CN10 — Backplane Power Supply
@@ -346,7 +354,7 @@ Nguồn GND   (−) ──────── CN10 Pin 1 or 4 or 5 (GND)
 | Nhiệt độ vận hành / Operating temp | 0 | 25 | 70 | °C |
 | Fuse rating (F2) | — | 2A | 2A | A |
 
-> ⚠️ **CẢNH BÁO / WARNING**: Không cấp nguồn đồng thời từ CN10 và khe PCIe nếu không có diode OR hoặc không chắc về nguồn / Do NOT power from both CN10 and PCIe slot simultaneously unless diode OR (D12/D44/D15) is confirmed installed.
+> ⚠️ **CẢNH BÁO / WARNING**: Không cấp nguồn đồng thời từ CN10 và khe PCIe nếu không có diode OR (D12/D44/D15) để tránh dòng ngược giữa hai nguồn điện.
 
 ---
 
@@ -439,6 +447,19 @@ Nguồn GND   (−) ──────── CN10 Pin 1 or 4 or 5 (GND)
 | **48** | `[ADC]` AI_IN6− | `[ADC]` AI_IN3− | **98** |
 | **49** | `[ADC]` AI_IN5+ | `[ADC]` AI_IN4+ | **99** |
 | **50** | `[ADC]` AI_IN5− | `[ADC]` AI_IN4− | **100** |
+
+### 11.3 Đặc tính điện tín hiệu J7A / J7A Electrical Specs
+
+| Nhóm / Group | Kiểu tín hiệu / Signal Type | Mức điện áp / Levels | Ghi chú / Notes |
+|--------------|---------------------------|----------------------|-----------------|
+| Encoder | RS-422 vi sai | 5V Logic | 120Ω on-board, max 10MHz |
+| Motor | RS-422 vi sai | 5V Logic | AM26LV31E, Pulse/Dir |
+| Analog In | Vi sai (Differential) | ±5V / ±10V | AD7606C 16-bit |
+| Analog Out | Đơn cực (Single-ended) | 0–5V / 0–10V | DAC81404 + Op-amp |
+| Digital Input | Cách ly (Isolated) | 5V – 30V | Cần cấp nguồn vào IN_ISOV+ |
+| Digital Output | Cách ly (Isolated) | 5V – 30V | Cần cấp nguồn vào OUT_ISOV+ |
+| CAN FD | Vi sai | CAN bus levels | ISO-11898 compliant |
+| RS-485 | Vi sai | RS-485 levels | Half-duplex, 120Ω term |
 
 ### 11.3 Hướng dẫn nối dây J7A / J7A Wiring Guide
 
@@ -655,9 +676,67 @@ graph TB
 
 ---
 
-## 14. Lập trình & Debug / Programming & Debug
+## 12. Phân bổ chân FPGA / FPGA Pin Assignment
 
-### 14.1 FPGA Programming — CN9 (JTAG)
+Hệ thống sử dụng module **ALINX AC7A035** (FPGA **XC7A35T-2FGG484I**). Các tín hiệu quan trọng được phân bổ trên 4 connector B2B (CN1–CN4).
+
+### 12.1 Tín hiệu hệ thống & USB (Xilinx Constraints)
+Tham khảo file `artix7_35K_pin_assignment.xdc` để lập trình:
+
+| Chức năng / Function | Tên port port (XDC) | Package Pin | Ghi chú |
+|----------------------|--------------------|-------------|---------|
+| **GTP Ref Clock** | `clk_in_clk_p` | **R4** | 125MHz Differential |
+| **USB 3.0 Clock** | `usb_clk` | **Y22** | FT601Q 100MHz |
+| **USB WR Strobe** | `wr_n` | **R19** | Write enable |
+| **USB TXE#** | `txe_n` | **U17** | FIFO status |
+| **USB RXF#** | `rxf_n` | **U18** | FIFO status |
+| **DAC SPI SCK** | `sclk` | **G22** | DAC Clock |
+| **DAC SPI MOSI** | `mosi` | **G20** | DAC Data |
+| **LED Vàng (Yellow)** | `vang` | **L18** | Status LED |
+| **LED Xanh (Green)** | `xanh` | **N19** | Status LED |
+
+### 12.2 Bản đồ bus ADC/DAC/Motor (Bank B15/B16)
+Chip Artix-7 giao tiếp với các ngoại vi base board chủ yếu qua Bank 15 và 16 (VCCO = 3.3V).
+
+- **Motor PWM/DIR**: Tín hiệu ra logic 3.3V trước khi qua AM26LV31E chuyển sang RS-422.
+- **Encoder**: Tín hiệu từ AM26LV32E chuyển về logic 3.3V vào FPGA.
+- **FMC Bus**: 16-bit dữ liệu song song kết nối MCU STM32H743 qua Bank 16.
+
+---
+
+## 15. Hướng dẫn phát triển Vivado / Vivado Development Guide
+
+Dành cho kỹ sư phát triển firmware FPGA trên môi trường **Xilinx Vivado**.
+
+### 15.1 Thiết lập Project (Project Setup)
+1. **Target Device**: Chọn Part `xc7a35tfgg484-2`. Artix-7 35K speed grade -2.
+2. **Clocking**:
+   - Nguồn clock chính 125MHz vi sai từ chân **R4** (GTP reference).
+   - Sử dụng **Clocking Wizard IP** để tạo các clock logic (100MHz, 200MHz) từ nguồn này.
+3. **Constraints**: Add file `artix7_35K_pin_assignment.xdc` vào project.
+
+### 15.2 Các IP Core quan trọng
+- **PCI Express**: Sử dụng `7 Series Integrated Block for PCI Express`. Thiết lập Lane Width: `X4`, Link Speed: `5.0 Gb/s (Gen2)`.
+- **USB 3.0**: Sử dụng kiến trúc FIFO 32-bit tương thích FT601Q. Lưu ý constraint `CLOCK_DEDICATED_ROUTE FALSE` cho chân `usb_clk`.
+- **Memory Interface (MIG)**: Để sử dụng HyperRAM hoặc DDR3 trên module, cấu hình MIG với clock 200MHz/400MHz.
+
+### 15.3 Workflow Lập trình
+1. **Tổng hợp & Implement**: Chạy `Run Synthesis` và `Run Implementation`.
+2. **Tạo Bitstream**: `Generate Bitstream`.
+3. **Nạp Card**:
+   - Sử dụng mạch nạp JTAG (Xilinx Platform Cable USB II) nối vào **CN9**.
+   - Cấp nguồn 12V cho card (qua PCIe hoặc CN10).
+   - Mở **Vivado Hardware Manager** để nạp file `.bit`.
+
+### 15.4 Gợi ý Debug
+- Sử dụng **Integrated Logic Analyzer (ILA)** IP để quan sát tín hiệu thời gian thực.
+- Theo dõi 2 LED trạng thái (`vang`, `xanh`) để báo hiệu trạng thái firmware.
+
+---
+
+## 16. Lập trình & Debug / Programming & Debug
+
+### 16.1 FPGA Programming — CN9 (JTAG)
 
 | Thông số / Parameter | Giá trị / Value |
 |----------------------|----------------|
@@ -667,7 +746,7 @@ graph TB
 | Phần mềm / Tool | Xilinx **Vivado / Vitis** (WebPACK — miễn phí / free) |
 | Nạp / Bitfile | JTAG volatile · SPI Flash persistent (AC7A035 module) |
 
-### 14.2 MCU Programming — P1 (SWD)
+### 16.2 MCU Programming — P1 (SWD)
 
 | Thông số / Parameter | Giá trị / Value |
 |----------------------|----------------|
@@ -676,7 +755,7 @@ graph TB
 | Boot mode | SW4 → BOOT0 high → DFU mode |
 | IDE | STM32CubeIDE · OpenOCD · ST-Link V2 · J-Link |
 
-### 14.3 Chỉ thị trạng thái / Status Indicators
+### 16.3 Chỉ thị trạng thái / Status Indicators
 
 | Linh kiện / Part | Chức năng / Function |
 |-----------------|---------------------|
@@ -685,7 +764,7 @@ graph TB
 | **SW2** | DIP 8 vị trí / 8-position → MCU GPIO người dùng / user GPIO |
 | **FPGA_BUTTON** | Nút người dùng → FPGA fabric |
 
-### 14.4 Test Points / Điểm đo
+### 16.4 Test Points / Điểm đo
 
 | Nhóm / Group | Tín hiệu / Signals |
 |-------------|-------------------|
