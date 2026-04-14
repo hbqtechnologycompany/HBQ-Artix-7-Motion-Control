@@ -35,7 +35,7 @@
 
 🇬🇧 The **HBQ PCIe Base Card V2.0** is a multi-axis motion control and data acquisition PCIe/PXI add-in card combining a Xilinx Artix-7 FPGA with an STM32H7 MCU. It delivers real-time servo/stepper control, high-precision analog I/O, isolated digital I/O, and industrial fieldbus — accessible from a host PC via PCIe x4 or USB 3.0.
 
-![PCB](PCB.jpg)
+![PCB](HBQ_PCIe_BaseCard_V2.jpg)
 
 | Thông số / Parameter | Giá trị / Specification |
 |----------------------|------------------------|
@@ -225,34 +225,7 @@ Cách ly qua / Isolated via: **ISO7740FDBQR** × 4 IC · 2500 VRMS · 150 Mbps
 
 ## 9. Kiến trúc nguồn / Power Architecture
 
-```
-12V Input (PCIe J1 / PXI CN5 / Backplane CN10)
-    │
-    ├─ [Diode OR: D12, D44, D15 — B240Q-13-F]
-    │
-    ├──► MAX20006AFOC (U9) ─── 12V → 5V Buck (~4A)
-    │         │
-    │         ├──► MP2122AGJ-Z (U10)
-    │         │         ├── 3.3V (L3) → Logic, CAN, USB, ISO, JTAG
-    │         │         └── 2.5V (L2) → HyperRAM VCCQ, VREF
-    │         │
-    │         └──► MP2122AGJ-Z (U11)
-    │                   ├── 1.8V (L4) → FPGA I/O banks
-    │                   └── 1.5V (L5) → HyperRAM VCC, TXB level-shifter
-    │
-    └──► L78M12CDT-TR (U8) → 12V_LDO → DAC analog (VDAC), TL082 op-amp
-```
-
-| Rail | Nguồn / Source | Tải / Load | Người dùng / Consumers |
-|------|---------------|-----------|------------------------|
-| 12V | Ngoài / External | — | Buck input, analog supply |
-| 5V | MAX20006 | ~2A | MCU, ADC, USB, encoder |
-| 3.3V | MP2122 U10 | ~1A | Logic, CAN, Modbus, ISO |
-| 2.5V | MP2122 U10 | ~200mA | HyperRAM VCCQ, ADC VREF |
-| 1.8V | MP2122 U11 | ~400mA | FPGA I/O banks |
-| 1.5V | MP2122 U11 | ~200mA | HyperRAM VCC |
-| 12V_LDO | L78M12 | ~200mA | DAC analog, op-amp rails |
-| 5V_ADC | 5V (jumper) | ~100mA | AD7606C AVCC |
+![Block diagram](Power Scheme 2.jpg)
 
 #### Nguồn cách ly cho I/O (Isolated I/O Power)
 Để sử dụng Digital Input/Output cách ly trên connector J7A, người dùng **bắt buộc** phải cấp nguồn ngoài (5–30V DC) vào các chân chuyên dụng:
@@ -565,114 +538,7 @@ RS-485 Device             J7A Connector
 
 ## 13. Sơ đồ khối / Block Diagram
 
-```mermaid
-graph TB
-
-  %% ─── HOST INTERFACES ───
-  subgraph HOST["🖥️  HOST PC / PXI CHASSIS"]
-    direction LR
-    H_PCIE["PCIe x4\nGen2 Host"]
-    H_USB["USB 3.0\nSuperSpeed Host"]
-    H_PXI["PXI Chassis\nCN5 / CN6"]
-  end
-
-  %% ─── POWER ───
-  subgraph PWR["⚡ POWER SUPPLY"]
-    direction TB
-    P_IN["12V Input\nCN10 / PCIe J1 / PXI"]
-    P_ESTOP["E-STOP\nCN15"]
-    P_5V["MAX20006\n12V → 5V Buck"]
-    P_33["MP2122 U10\n5V → 3.3V + 2.5V"]
-    P_18["MP2122 U11\n5V → 1.8V + 1.5V"]
-    P_LDO["L78M12 U8\n12V → 12V_LDO\n(Analog clean)"]
-  end
-
-  %% ─── FPGA CORE ───
-  subgraph FPGA["🔵 FPGA — Xilinx Artix-7 35K (XC7A035 on CN8)"]
-    direction TB
-    F_PCIE["PCIe Endpoint\nIP Core (GTP ×4)"]
-    F_USB["USB FIFO\nFT601Q Interface\n32-bit bus"]
-    F_ENC["Encoder Counter ×6\nA/B/Z · up to 10MHz"]
-    F_PWM["PWM+DIR Gen ×6\n20kHz–200kHz"]
-    F_ADC["ADC SPI Master\nAD7606C · 8ch · 16-bit"]
-    F_DAC["DAC SPI Master\nDAC81404 · 4ch · 16-bit"]
-    F_ISO["ISO DI/DO Logic\n8 DI + 8 DO"]
-    F_CAN["CAN TX/RX\nFPGA direct path"]
-    F_485["Modbus TX/RX\nFPGA direct path"]
-    F_FMC["FMC Bridge\n16-bit parallel\n→ MCU"]
-    F_RAM["HyperRAM\nW959D8NFY\n64Mbit"]
-    F_XADC["XADC\nBoard health\nmonitor"]
-  end
-
-  %% ─── MCU ───
-  subgraph MCU["🟢 MCU — STM32H743 @ 480MHz"]
-    direction TB
-    M_FMC["FMC Slave\n← FPGA"]
-    M_CAN["FDCAN1/2\n2× CAN FD"]
-    M_485["UART5\nModbus RTU"]
-    M_IMU["SPI1/SPI2/I2C\nIMU ×3 (J11)"]
-    M_QSPI["QSPI PSRAM\nAPS6404L\n64Mbit"]
-    M_SWD["SWD Debug\nP1 + UART P2"]
-  end
-
-  %% ─── FIELD I/O via J7A ───
-  subgraph FIELD["🟡 FIELD I/O — Connector J7A (100-pin · 5787082-9)"]
-    direction TB
-    IO_ENC["Encoder Input ×6\nRS-422 · AM26LV32E\nENC_1–6 A/B/Z±"]
-    IO_MTR["Motor Output ×6\nRS-422 · AM26LV31E\nMDR_PWM1–6 ·DIR1–6±"]
-    IO_ADC["Analog Input ×8\n16-bit diff · AD7606C\n±5V / ±10V"]
-    IO_DAC["Analog Output ×4\n16-bit · DAC81404\n+ TL082 buffer"]
-    IO_DI["Isolated DI ×8\nISO7740 · 2500VRMS\nISO_IN1–8"]
-    IO_DO["Isolated DO ×8\nISO7740 · 2500VRMS\nISO_OUT1–8"]
-    IO_CAN["CAN FD ×2\nSN65HVD230DR\nCAN1/2 P/N"]
-    IO_485["RS-485 ×2\nADM3065EARZ\nMODBUS1/2 A/B"]
-    IO_ISOPWR["ISO Supply\nIN_ISOV+ (pin33)\nOUT_ISOV+ (pin35)"]
-  end
-
-  %% ─── CONNECTIONS ───
-  H_PCIE <-->|"GTP MGT lanes ×4"| F_PCIE
-  H_USB  <-->|"USB 3.0 SuperSpeed"| F_USB
-  H_PXI  <-->|"PCIe lanes + Triggers"| F_PCIE
-
-  P_IN --> P_ESTOP
-  P_ESTOP --> P_5V
-  P_5V --> P_33
-  P_5V --> P_18
-  P_IN --> P_LDO
-
-  P_5V -->|5V| FPGA
-  P_33 -->|3.3V| FPGA
-  P_18 -->|1.8V| FPGA
-  P_5V -->|5V| MCU
-  P_33 -->|3.3V| MCU
-  P_LDO -->|12V_LDO| F_ADC
-  P_LDO -->|12V_LDO| F_DAC
-
-  F_ENC <-->|"FPGA_ENCx A/B/Z"| IO_ENC
-  F_PWM -->|"FPGA_MDR_PWMx/DIRx"| IO_MTR
-  F_ADC <-->|"SPI Serial"| IO_ADC
-  F_DAC -->|"SPI + TL082"| IO_DAC
-  F_ISO <-->|"ISO7740"| IO_DI
-  F_ISO <-->|"ISO7740"| IO_DO
-  F_CAN <-->|"CAN PHY"| IO_CAN
-  F_485 <-->|"RS-485 PHY"| IO_485
-
-  F_FMC <-->|"FMC 16-bit bus"| M_FMC
-  M_CAN <-->|"FDCAN1/2 → PHY"| IO_CAN
-  M_485 <-->|"UART → PHY"| IO_485
-  M_IMU <-->|"SPI/I2C"| J11["IMU Port\nJ11 (30-pin)"]
-
-  IO_ISOPWR -.->|"User supplies\n5–30V DC"| IO_DI
-  IO_ISOPWR -.->|"User supplies\n5–30V DC"| IO_DO
-
-  %% ─── STYLES ───
-  style HOST fill:#1a237e,color:#e3f2fd,stroke:#3f51b5
-  style PWR  fill:#1b5e20,color:#e8f5e9,stroke:#4caf50
-  style FPGA fill:#0d47a1,color:#e3f2fd,stroke:#2196f3
-  style MCU  fill:#1a3a1a,color:#c8e6c9,stroke:#4caf50
-  style FIELD fill:#4a148c,color:#f3e5f5,stroke:#9c27b0
-```
-
+![Block diagram](HBQ_PCIe_BaseCard_V2 Block diagram.jpg)
 ---
 
 ## 12. Phân bổ chân FPGA / FPGA Pin Assignment
