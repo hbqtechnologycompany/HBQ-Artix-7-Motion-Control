@@ -1,4 +1,4 @@
-# HBQ PCIe Base Card V2.0
+# HBQ-Artix-7-Motion-Control Card V2.0
 
 > 🇻🇳 **Card điều khiển chuyển động & thu thập dữ liệu FPGA + MCU hiệu năng cao**  
 > 🇬🇧 **High-Performance FPGA + MCU Motion Control & Data Acquisition Card**  
