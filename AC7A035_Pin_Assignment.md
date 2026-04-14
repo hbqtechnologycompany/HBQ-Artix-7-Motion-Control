@@ -1,11 +1,11 @@
 # ALINX AC7A035 — Artix-7 35K FPGA Module Pin Assignment
 
-> 🇻🇳 **Tài liệu phân công chân FPGA — HBQ PCIe Base Card V2.0**  
-> 🇬🇧 **FPGA Pin Assignment Reference — HBQ PCIe Base Card V2.0**  
+> 🇻🇳 **Tài liệu phân công chân FPGA — HBQ Artix-7 Motion Control Card**  
+> 🇬🇧 **FPGA Pin Assignment Reference — HBQ Artix-7 Motion Control Card**  
 >
 > Module: **ALINX AC7A035** · FPGA: **Xilinx XC7A35T-2FGG484I** (Artix-7 35K)  
 > Connector: 4 × **Panasonic AXK680337YG** (80-pin, 0.4mm pitch) → CN1, CN2, CN3, CN4  
-> Base board: **HBQ PCIe Base Card V2.0** · Schematic Rev 2.0 · 01/2026
+> Base board: **HBQ Artix-7 Motion Control Card** · Schematic Rev 2.0 · 01/2026
 
 ---
 
@@ -99,7 +99,7 @@ AC7A035 là module FPGA lõi (SoM) dựa trên FPGA Xilinx Artix-7 XC7A35T-2FGG4
           337YG     337YG      337YG      337YG
               │          │          │          │
        ┌──────┴──────┬───┴─────┬────┴────┬────┴────┐
-       │  HBQ PCIe Base Card V2.0 (Base Board)       │
+       │  HBQ Artix-7 Motion Control Card (Base Board)       │
        │  B13/B34     B13/B14   B15/B16   MGT/FMC   │
        └─────────────────────────────────────────────┘
 ```
@@ -515,7 +515,7 @@ File XDC hoàn chỉnh cho dự án HBQ PCIe Base Card. Copy và dùng làm temp
 
 ```tcl
 # ============================================================
-# HBQ PCIe Base Card V2.0 — FPGA Pin Constraints (XDC)
+# HBQ Artix-7 Motion Control Card — FPGA Pin Constraints (XDC)
 # FPGA: Xilinx XC7A35T-2FGG484I (ALINX AC7A035 module)
 # ============================================================
 
@@ -718,6 +718,6 @@ set_clock_groups -asynchronous \
 
 ---
 
-*🔧 FPGA: Xilinx XC7A35T-2FGG484I (ALINX AC7A035) · Base board: HBQ PCIe Base Card V2.0*  
+*🔧 FPGA: Xilinx XC7A35T-2FGG484I (ALINX AC7A035) · Base board: HBQ Artix-7 Motion Control Card*  
 *📄 Nguồn / Source: `Sch_PCIEBaseCard_Rev2_0.pdf` + `artix7_35K_pin_assignment.xdc` + schematic CN1–CN4 images*  
 *🌐 Module datasheet: https://www.en.alinx.com/Product/FPGA-System-on-Modules/Artix-7/AC7A035.html*

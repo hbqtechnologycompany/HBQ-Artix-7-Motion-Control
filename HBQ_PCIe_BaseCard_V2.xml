@@ -163,7 +163,7 @@ MCU direct access" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00838F;str
 30-pin RSM-115-02
 SPI2/SPI3/I2C4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#757575;strokeColor=#424242;fontColor=#FFFFFF;fontSize=8;fontStyle=0;align=center;verticalAlign=middle;dashed=0;" vertex="1" parent="1"><mxGeometry x="1115" y="1110" width="225" height="90" as="geometry" /></mxCell>
         <mxCell id="63" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontColor=#000000;fontSize=10;fontStyle=0;align=center;verticalAlign=middle;dashed=0;" vertex="1" parent="1"><mxGeometry x="1565" y="50" width="500" height="1140" as="geometry" /></mxCell>
-        <mxCell id="64" value="⚙️  J7A — 100-Pin Field I/O Connector  (TE 5787082-9 · 2×50 · 2.54mm)" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontStyle=1;fontColor=#4A148C;fillColor=none;strokeColor=none;" vertex="1" parent="1"><mxGeometry x="1565" y="50" width="500" height="25" as="geometry" /></mxCell>
+        <mxCell id="64" value="⚙️ SCSI 100-Pin Field I/O Connector  (J7A Connector · 2×50 · 2.54mm)" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontStyle=1;fontColor=#4A148C;fillColor=none;strokeColor=none;" vertex="1" parent="1"><mxGeometry x="1565" y="50" width="500" height="25" as="geometry" /></mxCell>
         <mxCell id="65" value="Encoder Input ×6
 RS-422 diff A/B/Z
 ENC_1–6 ±" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#A5D6A7;strokeColor=#2E7D32;fontColor=#000000;fontSize=8;fontStyle=0;align=center;verticalAlign=middle;dashed=0;" vertex="1" parent="1"><mxGeometry x="1575" y="80" width="480" height="85" as="geometry" /></mxCell>

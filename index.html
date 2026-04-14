@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HBQ Artix-7 PCIe Base Card V2.0 — Full Developer Wiki</title>
+    <title>HBQ Artix-7 Motion Control Card — Full Developer Wiki</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
@@ -137,8 +137,8 @@
     <!-- CONTENT -->
     <main class="content">
         <header>
-            <h1 class="main-title vi">HBQ Artix-7 PCIe Base Card V2.0</h1>
-            <h1 class="main-title en">HBQ Artix-7 PCIe Base Card V2.0</h1>
+            <h1 class="main-title vi">HBQ Artix-7 Motion Control Card</h1>
+            <h1 class="main-title en">HBQ Artix-7 Motion Control Card</h1>
             <p class="text-muted vi">Wiki tra cứu toàn diện cho việc phát triển firmware, tích hợp phần cứng và vận hành.</p>
             <p class="text-muted en">Comprehensive reference wiki for firmware development, hardware integration, and operation.</p>
         </header>
@@ -146,8 +146,28 @@
         <!-- OVERVIEW -->
         <section id="overview">
             <h2><i class="fas fa-info-circle"></i> <span class="vi">Tổng quan sản phẩm</span><span class="en">Product Overview</span></h2>
-            <p class="vi">HBQ PCIe Base Card V2.0 là card điều khiển chuyển động đa trục tích hợp FPGA Xilinx Artix-7 và MCU STM32H7, hỗ trợ PCIe x4, USB 3.0 và DAQ tốc độ cao.</p>
-            <p class="en">HBQ PCIe Base Card V2.0 is a multi-axis motion control card integrating Xilinx Artix-7 FPGA and STM32H7 MCU, supporting PCIe x4, USB 3.0, and high-speed DAQ.</p>
+            <p class="vi">HBQ Artix-7 Motion Control Card là card điều khiển chuyển động đa trục tích hợp FPGA Xilinx Artix-7 và MCU STM32H7, hỗ trợ PCIe x4, USB 3.0 và DAQ tốc độ cao.</p>
+            <p class="en">HBQ Artix-7 Motion Control Card is a multi-axis motion control card integrating Xilinx Artix-7 FPGA and STM32H7 MCU, supporting PCIe x4, USB 3.0, and high-speed DAQ.</p>
+
+            <div class="image-container" style="margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: white; box-shadow: var(--shadow);">
+                <img src="HBQ_PCIe_BaseCard_V2 Block diagram.jpg" alt="Block Diagram" style="width: 100%; display: block;">
+                <div style="padding: 16px; background: #fdfdfd; border-top: 1px solid var(--border);">
+                    <p class="vi" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-project-diagram"></i> Sơ đồ khối hệ thống</p>
+                    <p class="en" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-project-diagram"></i> System Block Diagram</p>
+                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Sơ đồ thể hiện sự kết nối giữa FPGA Artix-7 (xử lý thời gian thực) và MCU STM32H7 (quản lý giao thức và thuật toán), cùng các khối chức năng ADC/DAC, Motion Control và Host Interface.</p>
+                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">This diagram illustrates the interconnection between Artix-7 FPGA (real-time processing) and STM32H7 MCU (protocol management and algorithms), along with ADC/DAC, Motion Control, and Host Interface modules.</p>
+                </div>
+            </div>
+
+            <div class="image-container" style="margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: white; box-shadow: var(--shadow);">
+                <img src="HBQ_PCIe_BaseCard_V2.jpg" alt="Board Layout" style="width: 100%; display: block;">
+                <div style="padding: 16px; background: #fdfdfd; border-top: 1px solid var(--border);">
+                    <p class="vi" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-microchip"></i> Thành phần linh kiện trên Board</p>
+                    <p class="en" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-microchip"></i> On-board Component Layout</p>
+                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Bố cục phần cứng với các vị trí trung tâm của FPGA, MCU, chip USB 3.0 và hệ thống các Connector ngoại vi (J7A, PCIe, USB-C) và LED chỉ thị trạng thái.</p>
+                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">Hardware layout highlighting the central positions of the FPGA, MCU, USB 3.0 controller, and the peripheral connector array (J7A, PCIe, USB-C) along with status indicator LEDs.</p>
+                </div>
+            </div>
             
             <div class="table-wrap">
                 <table>
@@ -203,6 +223,16 @@
         <section id="power">
             <h2><i class="fas fa-bolt"></i> <span class="vi">Kiến trúc nguồn & Safety</span><span class="en">Power Architecture & Safety</span></h2>
             <p class="vi">Nguồn chính 12V được cấp qua 3 nguồn: Khe PCIe, Backplane PXI hoặc Connector CN10.</p>
+
+            <div class="image-container" style="margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: white; box-shadow: var(--shadow);">
+                <img src="Power Scheme 2.jpg" alt="Power Scheme" style="width: 100%; display: block;">
+                <div style="padding: 16px; background: #fdfdfd; border-top: 1px solid var(--border);">
+                    <p class="vi" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-charging-station"></i> Sơ đồ phân phối nguồn</p>
+                    <p class="en" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-charging-station"></i> Power Distribution Scheme</p>
+                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Sơ đồ các tầng hạ áp từ nguồn chính 12V xuống các mức 5V, 3.3V, 1.8V, 1.5V cấp cho FPGA, MCU và phần analog cách ly.</p>
+                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">Detailed diagram of step-down stages from the main 12V supply to 5V, 3.3V, 1.8V, 1.5V rails for the FPGA, MCU, and isolated analog sections.</p>
+                </div>
+            </div>
             
             <div class="notice notice-warn">
                 <i class="fas fa-exclamation-triangle"></i>
@@ -377,8 +407,8 @@
 
         <section id="fpga-map">
             <h2><i class="fas fa-microchip"></i> <span class="vi">Chi tiết Phân bổ chân FPGA</span><span class="en">FPGA Pin Mapping Details</span></h2>
-            <p class="vi">Dữ liệu được trích xuất trực tiếp từ tài liệu kỹ thuật của Module <strong>ALINX AC7A035</strong> (Xilinx XC7A35T-2FGG484I) kết hợp với Schematic <strong>HBQ PCIe Base Card V2.0</strong>.</p>
-            <p class="en">Data extracted from <strong>ALINX AC7A035</strong> (Xilinx XC7A35T-2FGG484I) Module reference and <strong>HBQ PCIe Base Card V2.0</strong> Schematic.</p>
+            <p class="vi">Dữ liệu được trích xuất trực tiếp từ tài liệu kỹ thuật của Module <strong>ALINX AC7A035</strong> (Xilinx XC7A35T-2FGG484I) kết hợp với Schematic <strong>HBQ Artix-7 Motion Control Card</strong>.</p>
+            <p class="en">Data extracted from <strong>ALINX AC7A035</strong> (Xilinx XC7A35T-2FGG484I) Module reference and <strong>HBQ Artix-7 Motion Control Card</strong> Schematic.</p>
 
             <!-- 1. I/O Bank -->
             <h3 class="vi">1. Cấu hình Bank I/O & Điện áp</h3>
@@ -518,7 +548,7 @@
             <div class="code-box">
                 <button class="copy-btn" onclick="copyCode('xdc-full')">Copy Full XDC</button>
                 <div id="xdc-full" style="white-space: pre;"># ============================================================
-# HBQ PCIe Base Card V2.0 — FPGA Pin Constraints (XDC)
+# HBQ Artix-7 Motion Control Card — FPGA Pin Constraints (XDC)
 # FPGA: Xilinx XC7A35T-2FGG484I (ALINX AC7A035 module)
 # ============================================================
 

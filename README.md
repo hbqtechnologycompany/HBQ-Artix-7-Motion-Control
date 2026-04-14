@@ -1,4 +1,4 @@
-# HBQ-Artix-7-Motion-Control Card V2.0
+# HBQ Artix-7 Motion Control Card
 
 > 🇻🇳 **Card điều khiển chuyển động & thu thập dữ liệu FPGA + MCU hiệu năng cao**  
 > 🇬🇧 **High-Performance FPGA + MCU Motion Control & Data Acquisition Card**  
@@ -31,9 +31,9 @@
 
 ## 1. Tổng quan / Product Overview
 
-🇻🇳 **HBQ PCIe Base Card V2.0** là card điều khiển chuyển động đa trục và thu thập dữ liệu dạng PCIe/PXI add-in, tích hợp FPGA Xilinx Artix-7 và MCU STM32H7. Card cung cấp khả năng điều khiển servo/stepper real-time, analog I/O chính xác cao, digital I/O cách ly và truyền thông công nghiệp — tất cả truy cập qua PCIe x4 hoặc USB 3.0 từ máy tính chủ.
+🇻🇳 **HBQ Artix-7 Motion Control Card** là card điều khiển chuyển động đa trục và thu thập dữ liệu dạng PCIe/PXI add-in, tích hợp FPGA Xilinx Artix-7 và MCU STM32H7. Card cung cấp khả năng điều khiển servo/stepper real-time, analog I/O chính xác cao, digital I/O cách ly và truyền thông công nghiệp — tất cả truy cập qua PCIe x4 hoặc USB 3.0 từ máy tính chủ.
 
-🇬🇧 The **HBQ PCIe Base Card V2.0** is a multi-axis motion control and data acquisition PCIe/PXI add-in card combining a Xilinx Artix-7 FPGA with an STM32H7 MCU. It delivers real-time servo/stepper control, high-precision analog I/O, isolated digital I/O, and industrial fieldbus — accessible from a host PC via PCIe x4 or USB 3.0.
+🇬🇧 The **HBQ Artix-7 Motion Control Card** is a multi-axis motion control and data acquisition PCIe/PXI add-in card combining a Xilinx Artix-7 FPGA with an STM32H7 MCU. It delivers real-time servo/stepper control, high-precision analog I/O, isolated digital I/O, and industrial fieldbus — accessible from a host PC via PCIe x4 or USB 3.0.
 
 ![PCB](HBQ_PCIe_BaseCard_V2.jpg)
 
