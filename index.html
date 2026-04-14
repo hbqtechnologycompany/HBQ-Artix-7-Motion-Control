@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HBQ Artix-7 Motion Control Card — Full Developer Wiki</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
         :root {
@@ -14,18 +17,47 @@
             --text-main: #1f2328;
             --text-muted: #656d76;
             --border: #d0d7de;
-            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; display: flex; scroll-behavior: smooth; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            scroll-behavior: smooth;
+        }
 
         /* Language Utility */
-        .en { display: none; }
-        .lang-en .en { display: inline; }
-        .lang-en .vi { display: none; }
-        .lang-en div.en, .lang-en p.en, .lang-en span.en { display: block; }
-        .lang-en div.vi, .lang-en p.vi, .lang-en span.vi { display: none; }
+        .en {
+            display: none;
+        }
+
+        .lang-en .en {
+            display: inline;
+        }
+
+        .lang-en .vi {
+            display: none;
+        }
+
+        .lang-en div.en,
+        .lang-en p.en,
+        .lang-en span.en {
+            display: block;
+        }
+
+        .lang-en div.vi,
+        .lang-en p.vi,
+        .lang-en span.vi {
+            display: none;
+        }
 
         /* Sidebar Navigation */
         .sidebar {
@@ -39,58 +71,274 @@
             z-index: 100;
         }
 
-        .logo-area { padding: 0 24px 20px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
-        .logo-area h1 { font-size: 1.1rem; font-weight: 800; color: var(--accent); }
-        
-        .lang-switch { display: flex; margin: 12px 24px; background: #eee; padding: 4px; border-radius: 6px; }
-        .lang-switch button { flex: 1; border: none; padding: 6px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; font-weight: 700; }
-        .lang-switch .active { background: white; box-shadow: var(--shadow); color: var(--accent); }
+        .logo-area {
+            padding: 0 24px 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
 
-        .nav-group { margin-bottom: 20px; }
-        .nav-title { padding: 8px 24px; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-        .nav-link { display: block; padding: 8px 24px; color: var(--text-main); text-decoration: none; font-size: 0.9rem; transition: background 0.2s; }
-        .nav-link:hover { background: #f3f6f9; color: var(--accent); }
-        .nav-link i { width: 20px; margin-right: 10px; font-size: 0.85rem; }
+        .logo-area h1 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .lang-switch {
+            display: flex;
+            margin: 12px 24px;
+            background: #eee;
+            padding: 4px;
+            border-radius: 6px;
+        }
+
+        .lang-switch button {
+            flex: 1;
+            border: none;
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .lang-switch .active {
+            background: white;
+            box-shadow: var(--shadow);
+            color: var(--accent);
+        }
+
+        .nav-group {
+            margin-bottom: 20px;
+        }
+
+        .nav-title {
+            padding: 8px 24px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 8px 24px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .nav-link:hover {
+            background: #f3f6f9;
+            color: var(--accent);
+        }
+
+        .nav-link i {
+            width: 20px;
+            margin-right: 10px;
+            font-size: 0.85rem;
+        }
 
         /* Content Area */
-        .content { margin-left: 300px; padding: 48px; width: 100%; max-width: 1100px; }
-        header { margin-bottom: 60px; }
-        h1.main-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 12px; }
-        
-        section { margin-bottom: 80px; scroll-margin-top: 40px; }
-        h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; align-items: center; gap: 12px; }
-        h3 { font-size: 1.2rem; margin: 32px 0 16px; font-weight: 600; color: var(--accent); }
-        
+        .content {
+            margin-left: 300px;
+            padding: 48px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        header {
+            margin-bottom: 60px;
+        }
+
+        h1.main-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        section {
+            margin-bottom: 80px;
+            scroll-margin-top: 40px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin: 32px 0 16px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
         /* Elements */
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 32px; }
-        .card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; box-shadow: var(--shadow); }
-        .card h4 { font-size: 1rem; margin-bottom: 8px; font-weight: 700; }
-        .card p { font-size: 0.85rem; color: var(--text-muted); }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
 
-        .table-wrap { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 24px; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-        th { background: #f6f8fa; padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left; }
-        td { padding: 10px 16px; border-bottom: 1px solid #f1f1f1; vertical-align: top; }
-        tr:last-child td { border-bottom: none; }
-        
-        .code-box { background: #f8f9fa; border: 1px solid var(--border); border-radius: 6px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; overflow-x: auto; margin-bottom: 24px; position: relative; }
-        .copy-btn { position: absolute; top: 10px; right: 10px; color: var(--accent); border: none; background: #fff; padding: 4px 8px; border-radius: 4px; box-shadow: var(--shadow); cursor: pointer; font-size: 0.7rem; }
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
 
-        .notice { padding: 16px 20px; border-radius: 6px; margin-bottom: 24px; border-left: 4px solid #fff; font-size: 0.9rem; }
-        .notice-info { background: #eff6ff; border-left-color: var(--accent); }
-        .notice-warn { background: #fff8eb; border-left-color: #d29922; }
+        .card h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
 
-        .mono { font-family: 'JetBrains Mono', monospace; background: #f1f1f1; padding: 2px 4px; border-radius: 3px; font-size: 0.85em; }
-        .pill { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-left: 5px; }
-        .p-adc { background: #dcfeff; color: #007078; }
-        .p-dac { background: #f5f0ff; color: #8250df; }
-        .p-mtr { background: #ddf4ff; color: #0969da; }
-        .p-enc { background: #dafbe1; color: #1a7f37; }
-        .p-iso { background: #fff8c5; color: #9a6700; }
+        .card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
 
-        @media (max-width: 900px) { .sidebar { display: none; } .content { margin-left: 0; padding: 24px; } }
+        .table-wrap {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        th {
+            background: #f6f8fa;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #f1f1f1;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .code-box {
+            background: #f8f9fa;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--accent);
+            border: none;
+            background: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+
+        .notice {
+            padding: 16px 20px;
+            border-radius: 6px;
+            margin-bottom: 24px;
+            border-left: 4px solid #fff;
+            font-size: 0.9rem;
+        }
+
+        .notice-info {
+            background: #eff6ff;
+            border-left-color: var(--accent);
+        }
+
+        .notice-warn {
+            background: #fff8eb;
+            border-left-color: #d29922;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+            background: #f1f1f1;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: 5px;
+        }
+
+        .p-adc {
+            background: #dcfeff;
+            color: #007078;
+        }
+
+        .p-dac {
+            background: #f5f0ff;
+            color: #8250df;
+        }
+
+        .p-mtr {
+            background: #ddf4ff;
+            color: #0969da;
+        }
+
+        .p-enc {
+            background: #dafbe1;
+            color: #1a7f37;
+        }
+
+        .p-iso {
+            background: #fff8c5;
+            color: #9a6700;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 24px;
+            }
+        }
     </style>
 </head>
+
 <body class="lang-vi">
 
     <!-- SIDEBAR -->
@@ -124,7 +372,8 @@
         <div class="nav-group">
             <div class="nav-title">Connections</div>
             <a href="#pinout" class="nav-link"><i class="fas fa-plug"></i> SCSI 100-Pin Full</a>
-            <a href="SCSI_100Pin_Connector_Guide.html" class="nav-link" target="_blank"><i class="fas fa-file-alt"></i> SCSI Connector Datasheet</a>
+            <a href="SCSI_100Pin_Connector_Guide.html" class="nav-link" target="_blank"><i class="fas fa-file-alt"></i>
+                SCSI Connector Datasheet</a>
             <a href="#fpga-map" class="nav-link"><i class="fas fa-microchip"></i> Pin Assignment (XDC)</a>
         </div>
 
@@ -140,48 +389,91 @@
         <header>
             <h1 class="main-title vi">HBQ Artix-7 Motion Control Card</h1>
             <h1 class="main-title en">HBQ Artix-7 Motion Control Card</h1>
-            <p class="text-muted vi">Wiki tra cứu toàn diện cho việc phát triển firmware, tích hợp phần cứng và vận hành.</p>
-            <p class="text-muted en">Comprehensive reference wiki for firmware development, hardware integration, and operation.</p>
+            <p class="text-muted vi">Wiki tra cứu toàn diện cho việc phát triển firmware, tích hợp phần cứng và vận
+                hành.</p>
+            <p class="text-muted en">Comprehensive reference wiki for firmware development, hardware integration, and
+                operation.</p>
         </header>
 
         <!-- OVERVIEW -->
         <section id="overview">
-            <h2><i class="fas fa-info-circle"></i> <span class="vi">Tổng quan sản phẩm</span><span class="en">Product Overview</span></h2>
-            <p class="vi">HBQ Artix-7 Motion Control Card là card điều khiển chuyển động đa trục tích hợp FPGA Xilinx Artix-7 và MCU STM32H7, hỗ trợ PCIe x4, USB 3.0 và DAQ tốc độ cao.</p>
-            <p class="en">HBQ Artix-7 Motion Control Card is a multi-axis motion control card integrating Xilinx Artix-7 FPGA and STM32H7 MCU, supporting PCIe x4, USB 3.0, and high-speed DAQ.</p>
+            <h2><i class="fas fa-info-circle"></i> <span class="vi">Tổng quan sản phẩm</span><span class="en">Product
+                    Overview</span></h2>
+            <p class="vi">HBQ Artix-7 Motion Control Card là card điều khiển chuyển động đa trục tích hợp FPGA Xilinx
+                Artix-7 và MCU STM32H7, hỗ trợ PCIe x4, USB 3.0 và DAQ tốc độ cao.</p>
+            <p class="en">HBQ Artix-7 Motion Control Card is a multi-axis motion control card integrating Xilinx Artix-7
+                FPGA and STM32H7 MCU, supporting PCIe x4, USB 3.0, and high-speed DAQ.</p>
 
-            <div class="image-container" style="margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: white; box-shadow: var(--shadow);">
-                <img src="HBQ_PCIe_BaseCard_V2 Block diagram.jpg" alt="Block Diagram" style="width: 100%; display: block;">
+            <div class="image-container"
+                style="margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: white; box-shadow: var(--shadow);">
+                <img src="HBQ_PCIe_BaseCard_V2 Block diagram.jpg" alt="Block Diagram"
+                    style="width: 100%; display: block;">
                 <div style="padding: 16px; background: #fdfdfd; border-top: 1px solid var(--border);">
-                    <p class="vi" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-project-diagram"></i> Sơ đồ khối hệ thống</p>
-                    <p class="en" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-project-diagram"></i> System Block Diagram</p>
-                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Sơ đồ thể hiện sự kết nối giữa FPGA Artix-7 (xử lý thời gian thực) và MCU STM32H7 (quản lý giao thức và thuật toán), cùng các khối chức năng ADC/DAC, Motion Control và Host Interface.</p>
-                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">This diagram illustrates the interconnection between Artix-7 FPGA (real-time processing) and STM32H7 MCU (protocol management and algorithms), along with ADC/DAC, Motion Control, and Host Interface modules.</p>
+                    <p class="vi" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i
+                            class="fas fa-project-diagram"></i> Sơ đồ khối hệ thống</p>
+                    <p class="en" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i
+                            class="fas fa-project-diagram"></i> System Block Diagram</p>
+                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Sơ đồ thể hiện sự kết nối giữa
+                        FPGA Artix-7 (xử lý thời gian thực) và MCU STM32H7 (quản lý giao thức và thuật toán), cùng các
+                        khối chức năng ADC/DAC, Motion Control và Host Interface.</p>
+                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">This diagram illustrates the
+                        interconnection between Artix-7 FPGA (real-time processing) and STM32H7 MCU (protocol management
+                        and algorithms), along with ADC/DAC, Motion Control, and Host Interface modules.</p>
                 </div>
             </div>
 
-            <div class="image-container" style="margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: white; box-shadow: var(--shadow);">
+            <div class="image-container"
+                style="margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: white; box-shadow: var(--shadow);">
                 <img src="HBQ_PCIe_BaseCard_V2.jpg" alt="Board Layout" style="width: 100%; display: block;">
                 <div style="padding: 16px; background: #fdfdfd; border-top: 1px solid var(--border);">
-                    <p class="vi" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-microchip"></i> Thành phần linh kiện trên Board</p>
-                    <p class="en" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-microchip"></i> On-board Component Layout</p>
-                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Bố cục phần cứng với các vị trí trung tâm của FPGA, MCU, chip USB 3.0 và hệ thống các Connector ngoại vi (SCSI, PCIe, USB-C) và LED chỉ thị trạng thái.</p>
-                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">Hardware layout highlighting the central positions of the FPGA, MCU, USB 3.0 controller, and the peripheral connector array (SCSI, PCIe, USB-C) along with status indicator LEDs.</p>
+                    <p class="vi" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i
+                            class="fas fa-microchip"></i> Thành phần linh kiện trên Board</p>
+                    <p class="en" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i
+                            class="fas fa-microchip"></i> On-board Component Layout</p>
+                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Bố cục phần cứng với các vị trí
+                        trung tâm của FPGA, MCU, chip USB 3.0 và hệ thống các Connector ngoại vi (SCSI, PCIe, USB-C) và
+                        LED chỉ thị trạng thái.</p>
+                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">Hardware layout highlighting the
+                        central positions of the FPGA, MCU, USB 3.0 controller, and the peripheral connector array
+                        (SCSI, PCIe, USB-C) along with status indicator LEDs.</p>
                 </div>
             </div>
-            
+
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th class="vi">Thông số</th><th class="en">Parameter</th><th class="vi">Giá trị chi tiết</th><th class="en">Detailed Value</th></tr>
+                        <tr>
+                            <th class="vi">Thông số</th>
+                            <th class="en">Parameter</th>
+                            <th class="vi">Giá trị chi tiết</th>
+                            <th class="en">Detailed Value</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td><strong>Form Factor</strong></td><td>PCIe Full-Height · PXI Hybrid slot compatible</td></tr>
-                        <tr><td><strong>FPGA Core</strong></td><td>Xilinx Artix-7 35K — XC7A35T (ALINX AC7A035)</td></tr>
-                        <tr><td><strong>MCU Core</strong></td><td>STM32H743VIT6 — ARM Cortex-M7 @ 480 MHz</td></tr>
-                        <tr><td><strong>Motor Axes</strong></td><td>6 × Servo/Stepper (RS-422 differential, 500kHz)</td></tr>
-                        <tr><td><strong>Encoder Axes</strong></td><td>6 × Quadrature A/B/Z (RS-422 differential, 10MHz)</td></tr>
-                        <tr><td><strong>High-speed Link</strong></td><td>PCIe x4 Gen2 · USB 3.0 (200MB/s)</td></tr>
+                        <tr>
+                            <td><strong>Form Factor</strong></td>
+                            <td>PCIe Full-Height · PXI Hybrid slot compatible</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FPGA Core</strong></td>
+                            <td>Xilinx Artix-7 35K — XC7A35T (ALINX AC7A035)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MCU Core</strong></td>
+                            <td>STM32H743VIT6 — ARM Cortex-M7 @ 480 MHz</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Motor Axes</strong></td>
+                            <td>6 × Servo/Stepper (RS-422 differential, 500kHz)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Encoder Axes</strong></td>
+                            <td>6 × Quadrature A/B/Z (RS-422 differential, 10MHz)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>High-speed Link</strong></td>
+                            <td>PCIe x4 Gen2 · USB 3.0 (200MB/s)</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -189,19 +481,24 @@
 
         <!-- PROCESSORS -->
         <section id="processors">
-            <h2><i class="fas fa-brain"></i> <span class="vi">Bộ xử lý trung tâm</span><span class="en">Core Processors</span></h2>
-            
+            <h2><i class="fas fa-brain"></i> <span class="vi">Bộ xử lý trung tâm</span><span class="en">Core
+                    Processors</span></h2>
+
             <h3 class="vi">1. FPGA Xilinx Artix-7 (XC7A35T)</h3>
             <h3 class="en">1. Xilinx Artix-7 FPGA (XC7A35T)</h3>
             <div class="card-grid">
                 <div class="card">
-                    <h4 class="vi">Tài nguyên Logic</h4><h4 class="en">Logic Resources</h4>
+                    <h4 class="vi">Tài nguyên Logic</h4>
+                    <h4 class="en">Logic Resources</h4>
                     <p>33,280 Logic Cells · 50 DSP Slices · 1,800 Kbits Block RAM.</p>
                 </div>
                 <div class="card">
-                    <h4 class="vi">Nhiệm vụ chính</h4><h4 class="en">Core Tasks</h4>
-                    <p class="vi">PCIe Endpoint, Encoder counter, PWM generation, SPI Master for ADC/DAC, FMC bridge to MCU.</p>
-                    <p class="en">PCIe Endpoint, Encoder counter, PWM generation, SPI Master for ADC/DAC, FMC bridge to MCU.</p>
+                    <h4 class="vi">Nhiệm vụ chính</h4>
+                    <h4 class="en">Core Tasks</h4>
+                    <p class="vi">PCIe Endpoint, Encoder counter, PWM generation, SPI Master for ADC/DAC, FMC bridge to
+                        MCU.</p>
+                    <p class="en">PCIe Endpoint, Encoder counter, PWM generation, SPI Master for ADC/DAC, FMC bridge to
+                        MCU.</p>
                 </div>
             </div>
 
@@ -209,12 +506,15 @@
             <h3 class="en">2. STM32H743VIT6 MCU</h3>
             <div class="card-grid">
                 <div class="card">
-                    <h4 class="vi">Hiệu năng</h4><h4 class="en">Performance</h4>
+                    <h4 class="vi">Hiệu năng</h4>
+                    <h4 class="en">Performance</h4>
                     <p>Cortex-M7 @ 480 MHz · DMA-capable FMC bus · 2MB Flash · 1MB RAM.</p>
                 </div>
                 <div class="card">
-                    <h4 class="vi">Nhiệm vụ chính</h4><h4 class="en">Core Tasks</h4>
-                    <p class="vi">Giao thức CAN FD, Modbus RTU, thuật toán trajectory Planning, điều khiển IMU trên chip.</p>
+                    <h4 class="vi">Nhiệm vụ chính</h4>
+                    <h4 class="en">Core Tasks</h4>
+                    <p class="vi">Giao thức CAN FD, Modbus RTU, thuật toán trajectory Planning, điều khiển IMU trên
+                        chip.</p>
                     <p class="en">CAN FD, Modbus RTU, Trajectory Planning, on-board IMU control.</p>
                 </div>
             </div>
@@ -222,38 +522,72 @@
 
         <!-- POWER -->
         <section id="power">
-            <h2><i class="fas fa-bolt"></i> <span class="vi">Kiến trúc nguồn & Safety</span><span class="en">Power Architecture & Safety</span></h2>
+            <h2><i class="fas fa-bolt"></i> <span class="vi">Kiến trúc nguồn & Safety</span><span class="en">Power
+                    Architecture & Safety</span></h2>
             <p class="vi">Nguồn chính 12V được cấp qua 3 nguồn: Khe PCIe, Backplane PXI hoặc Connector CN10.</p>
 
-            <div class="image-container" style="margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: white; box-shadow: var(--shadow);">
+            <div class="image-container"
+                style="margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: white; box-shadow: var(--shadow);">
                 <img src="Power Scheme 2.jpg" alt="Power Scheme" style="width: 100%; display: block;">
                 <div style="padding: 16px; background: #fdfdfd; border-top: 1px solid var(--border);">
-                    <p class="vi" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-charging-station"></i> Sơ đồ phân phối nguồn</p>
-                    <p class="en" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-charging-station"></i> Power Distribution Scheme</p>
-                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Sơ đồ các tầng hạ áp từ nguồn chính 12V xuống các mức 5V, 3.3V, 1.8V, 1.5V cấp cho FPGA, MCU và phần analog cách ly.</p>
-                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">Detailed diagram of step-down stages from the main 12V supply to 5V, 3.3V, 1.8V, 1.5V rails for the FPGA, MCU, and isolated analog sections.</p>
+                    <p class="vi" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i
+                            class="fas fa-charging-station"></i> Sơ đồ phân phối nguồn</p>
+                    <p class="en" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i
+                            class="fas fa-charging-station"></i> Power Distribution Scheme</p>
+                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Sơ đồ các tầng hạ áp từ nguồn
+                        chính 12V xuống các mức 5V, 3.3V, 1.8V, 1.5V cấp cho FPGA, MCU và phần analog cách ly.</p>
+                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">Detailed diagram of step-down
+                        stages from the main 12V supply to 5V, 3.3V, 1.8V, 1.5V rails for the FPGA, MCU, and isolated
+                        analog sections.</p>
                 </div>
             </div>
-            
+
             <div class="notice notice-warn">
                 <i class="fas fa-exclamation-triangle"></i>
                 <div class="notice-content">
                     <strong class="vi">Lưu ý E-STOP (CN15)</strong><strong class="en">E-STOP Note (CN15)</strong>
-                    <p class="vi">Kín mạch Pin 1 & 2 trên CN15 là điều kiện bắt buộc để card hoạt động. Đây là ngắt cứng bảo vệ toàn board.</p>
-                    <p class="en">Closing Pin 1 & 2 on CN15 is mandatory for card operation. This is a hardware interlock for the entire board.</p>
+                    <p class="vi">Kín mạch Pin 1 & 2 trên CN15 là điều kiện bắt buộc để card hoạt động. Đây là ngắt cứng
+                        bảo vệ toàn board.</p>
+                    <p class="en">Closing Pin 1 & 2 on CN15 is mandatory for card operation. This is a hardware
+                        interlock for the entire board.</p>
                 </div>
             </div>
 
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Power Rail</th><th>Source IC</th><th>Typical Load</th><th>Consumers</th></tr>
+                        <tr>
+                            <th>Power Rail</th>
+                            <th>Source IC</th>
+                            <th>Typical Load</th>
+                            <th>Consumers</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td><span class="mono">5V</span></td><td>MAX20006</td><td>2A</td><td>MCU, ADC, USB, Encoder supply</td></tr>
-                        <tr><td><span class="mono">3.3V</span></td><td>MP2122 U10</td><td>1A</td><td>Logic IO, CAN, Modbus, ISO blocks</td></tr>
-                        <tr><td><span class="mono">1.8V / 1.5V</span></td><td>MP2122 U11</td><td>600mA</td><td>FPGA Banks, HyperRAM core</td></tr>
-                        <tr><td><span class="mono">12V_LDO</span></td><td>L78M12</td><td>200mA</td><td>DAC Analog, Op-amp filters</td></tr>
+                        <tr>
+                            <td><span class="mono">5V</span></td>
+                            <td>MAX20006</td>
+                            <td>2A</td>
+                            <td>MCU, ADC, USB, Encoder supply</td>
+                        </tr>
+                        <tr>
+                            <td><span class="mono">3.3V</span></td>
+                            <td>MP2122 U10</td>
+                            <td>1A</td>
+                            <td>Logic IO, CAN, Modbus, ISO blocks</td>
+                        </tr>
+                        <tr>
+                            <td><span class="mono">1.8V / 1.5V</span></td>
+                            <td>MP2122 U11</td>
+                            <td>600mA</td>
+                            <td>FPGA Banks, HyperRAM core</td>
+                        </tr>
+                        <tr>
+                            <td><span class="mono">12V_LDO</span></td>
+                            <td>L78M12</td>
+                            <td>200mA</td>
+                            <td>DAC Analog, Op-amp filters</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -261,8 +595,9 @@
 
         <!-- ANALOG I/O -->
         <section id="analog">
-            <h2><i class="fas fa-wave-square"></i> <span class="vi">I/O Analog (ADC & DAC)</span><span class="en">Analog I/O (ADC & DAC)</span></h2>
-            
+            <h2><i class="fas fa-wave-square"></i> <span class="vi">I/O Analog (ADC & DAC)</span><span class="en">Analog
+                    I/O (ADC & DAC)</span></h2>
+
             <h3 class="vi">1. Khối ADC (AD7606C-16)</h3>
             <h3 class="en">1. ADC Block (AD7606C-16)</h3>
             <p class="vi">8 kênh thu thập đồng thời, độ phân giải 16-bit, dải đo ±5V hoặc ±10V (chọn qua Jumper J4).</p>
@@ -270,13 +605,33 @@
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>SPI Signal</th><th>FPGA Pin (Package)</th><th>Function</th></tr>
+                        <tr>
+                            <th>SPI Signal</th>
+                            <th>FPGA Pin (Package)</th>
+                            <th>Function</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>ADC_SCLK</td><td><span class="mono">H22</span></td><td>SPI Clock</td></tr>
-                        <tr><td>ADC_CS</td><td><span class="mono">K21</span></td><td>Chip Select</td></tr>
-                        <tr><td>ADC_DOUT_A..D</td><td><span class="mono">G21, G22, H21, J21</span></td><td>Data lines (2 ch per line)</td></tr>
-                        <tr><td>ADC_BUSY</td><td><span class="mono">V11</span></td><td>Conversion status</td></tr>
+                        <tr>
+                            <td>ADC_SCLK</td>
+                            <td><span class="mono">H22</span></td>
+                            <td>SPI Clock</td>
+                        </tr>
+                        <tr>
+                            <td>ADC_CS</td>
+                            <td><span class="mono">K21</span></td>
+                            <td>Chip Select</td>
+                        </tr>
+                        <tr>
+                            <td>ADC_DOUT_A..D</td>
+                            <td><span class="mono">G21, G22, H21, J21</span></td>
+                            <td>Data lines (2 ch per line)</td>
+                        </tr>
+                        <tr>
+                            <td>ADC_BUSY</td>
+                            <td><span class="mono">V11</span></td>
+                            <td>Conversion status</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -288,13 +643,33 @@
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Signal</th><th>FPGA Pin (Package)</th><th>Function</th></tr>
+                        <tr>
+                            <th>Signal</th>
+                            <th>FPGA Pin (Package)</th>
+                            <th>Function</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>DAC_MOSI</td><td><span class="mono">G20</span></td><td>Data In</td></tr>
-                        <tr><td>DAC_SCLK</td><td><span class="mono">G22</span></td><td>SPI Clock</td></tr>
-                        <tr><td>DAC_CS</td><td><span class="mono">H20</span></td><td>Chip Select</td></tr>
-                        <tr><td>DAC_LDAC</td><td><span class="mono">H22</span></td><td>Logic Load</td></tr>
+                        <tr>
+                            <td>DAC_MOSI</td>
+                            <td><span class="mono">G20</span></td>
+                            <td>Data In</td>
+                        </tr>
+                        <tr>
+                            <td>DAC_SCLK</td>
+                            <td><span class="mono">G22</span></td>
+                            <td>SPI Clock</td>
+                        </tr>
+                        <tr>
+                            <td>DAC_CS</td>
+                            <td><span class="mono">H20</span></td>
+                            <td>Chip Select</td>
+                        </tr>
+                        <tr>
+                            <td>DAC_LDAC</td>
+                            <td><span class="mono">H22</span></td>
+                            <td>Logic Load</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -302,22 +677,53 @@
 
         <!-- MOTION CONTROL -->
         <section id="motion">
-            <h2><i class="fas fa-sliders-h"></i> <span class="vi">Điều khiển Chuyển động</span><span class="en">Motion Control I/O</span></h2>
-            
+            <h2><i class="fas fa-sliders-h"></i> <span class="vi">Điều khiển Chuyển động</span><span class="en">Motion
+                    Control I/O</span></h2>
+
             <h3 class="vi">Encoder Input (RS-422 Vi sai)</h3>
             <h3 class="en">Encoder Input (RS-422 Differential)</h3>
             <p class="vi">Tích hợp điện trở đầu cuối 120Ω trên board. Sử dụng chip nhận AM26LV32E.</p>
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Trục / Axis</th><th>Chân A+ / A-</th><th>Chân B+ / B-</th><th>Chân Z+ / Z-</th></tr>
+                        <tr>
+                            <th>Trục / Axis</th>
+                            <th>Chân A+ / A-</th>
+                            <th>Chân B+ / B-</th>
+                            <th>Chân Z+ / Z-</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Encoder 1</td><td>27 / 26</td><td>25 / 24</td><td>77 / 76</td></tr>
-                        <tr><td>Encoder 2</td><td>75 / 74</td><td>23 / 22</td><td>21 / 20</td></tr>
-                        <tr><td>Encoder 3</td><td>73 / 72</td><td>71 / 70</td><td>19 / 18</td></tr>
-                        <tr><td>Encoder 4</td><td>17 / 16</td><td>69 / 68</td><td>67 / 66</td></tr>
-                        <tr><td>Encoder 5</td><td>31 / 30</td><td>29 / 28</td><td>79 / 78</td></tr>
+                        <tr>
+                            <td>Encoder 1</td>
+                            <td>27 / 26</td>
+                            <td>25 / 24</td>
+                            <td>77 / 76</td>
+                        </tr>
+                        <tr>
+                            <td>Encoder 2</td>
+                            <td>75 / 74</td>
+                            <td>23 / 22</td>
+                            <td>21 / 20</td>
+                        </tr>
+                        <tr>
+                            <td>Encoder 3</td>
+                            <td>73 / 72</td>
+                            <td>71 / 70</td>
+                            <td>19 / 18</td>
+                        </tr>
+                        <tr>
+                            <td>Encoder 4</td>
+                            <td>17 / 16</td>
+                            <td>69 / 68</td>
+                            <td>67 / 66</td>
+                        </tr>
+                        <tr>
+                            <td>Encoder 5</td>
+                            <td>31 / 30</td>
+                            <td>29 / 28</td>
+                            <td>79 / 78</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -327,13 +733,38 @@
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Trục / Axis</th><th>FPGA PWM Pin</th><th>FPGA DIR Pin</th><th>SCSI Pins</th></tr>
+                        <tr>
+                            <th>Trục / Axis</th>
+                            <th>FPGA PWM Pin</th>
+                            <th>FPGA DIR Pin</th>
+                            <th>SCSI Pins</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Motor 1</td><td><span class="mono">L12_P</span></td><td><span class="mono">L12_N</span></td><td>Pin 12 / Pin 10</td></tr>
-                        <tr><td>Motor 2</td><td><span class="mono">L10_N</span></td><td><span class="mono">L10_P</span></td><td>Pin 64 / Pin 62</td></tr>
-                        <tr><td>Motor 3</td><td><span class="mono">L4_N</span></td><td><span class="mono">L4_P</span></td><td>Pin 7 / Pin 5</td></tr>
-                        <tr><td>Motor 4</td><td><span class="mono">IO0</span></td><td><span class="mono">L6_P</span></td><td>Pin 60 / Pin 58</td></tr>
+                        <tr>
+                            <td>Motor 1</td>
+                            <td><span class="mono">L12_P</span></td>
+                            <td><span class="mono">L12_N</span></td>
+                            <td>Pin 12 / Pin 10</td>
+                        </tr>
+                        <tr>
+                            <td>Motor 2</td>
+                            <td><span class="mono">L10_N</span></td>
+                            <td><span class="mono">L10_P</span></td>
+                            <td>Pin 64 / Pin 62</td>
+                        </tr>
+                        <tr>
+                            <td>Motor 3</td>
+                            <td><span class="mono">L4_N</span></td>
+                            <td><span class="mono">L4_P</span></td>
+                            <td>Pin 7 / Pin 5</td>
+                        </tr>
+                        <tr>
+                            <td>Motor 4</td>
+                            <td><span class="mono">IO0</span></td>
+                            <td><span class="mono">L6_P</span></td>
+                            <td>Pin 60 / Pin 58</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -341,19 +772,37 @@
 
         <!-- DIGITAL ISOLATED -->
         <section id="digital">
-            <h2><i class="fas fa-toggle-on"></i> <span class="vi">Digital I/O Cách ly</span><span class="en">Isolated Digital I/O</span></h2>
+            <h2><i class="fas fa-toggle-on"></i> <span class="vi">Digital I/O Cách ly</span><span class="en">Isolated
+                    Digital I/O</span></h2>
             <div class="notice notice-info">
-                <span class="vi">Cần cấp nguồn 5-30V DC riêng biệt cho khối IN (pins 33/34) và khối OUT (pins 35/36).</span>
-                <span class="en">Requires separate 5-30V DC power for IN block (pins 33/34) and OUT block (pins 35/36).</span>
+                <span class="vi">Cần cấp nguồn 5-30V DC riêng biệt cho khối IN (pins 33/34) và khối OUT (pins
+                    35/36).</span>
+                <span class="en">Requires separate 5-30V DC power for IN block (pins 33/34) and OUT block (pins
+                    35/36).</span>
             </div>
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Channel</th><th>J7A Pin (I/O)</th><th>FPGA Pin (Net)</th><th>Logic Level</th></tr>
+                        <tr>
+                            <th>Channel</th>
+                            <th>J7A Pin (I/O)</th>
+                            <th>FPGA Pin (Net)</th>
+                            <th>Logic Level</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>DI 1-4</td><td>83, 82, 81, 80</td><td>Bank 15</td><td>Isolated 24V</td></tr>
-                        <tr><td>DO 1-4</td><td>37, 38, 39, 40</td><td>Bank 16</td><td>Isolated 24V</td></tr>
+                        <tr>
+                            <td>DI 1-4</td>
+                            <td>83, 82, 81, 80</td>
+                            <td>Bank 15</td>
+                            <td>Isolated 24V</td>
+                        </tr>
+                        <tr>
+                            <td>DO 1-4</td>
+                            <td>37, 38, 39, 40</td>
+                            <td>Bank 16</td>
+                            <td>Isolated 24V</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -361,8 +810,9 @@
 
         <!-- FIELDBUS -->
         <section id="fieldbus">
-            <h2><i class="fas fa-network-wired"></i> <span class="vi">Truyền thông Công nghiệp</span><span class="en">Industrial Fieldbus</span></h2>
-            
+            <h2><i class="fas fa-network-wired"></i> <span class="vi">Truyền thông Công nghiệp</span><span
+                    class="en">Industrial Fieldbus</span></h2>
+
             <h3 class="vi">1. CAN FD (2 Cổng)</h3>
             <h3 class="en">1. CAN FD (2 Ports)</h3>
             <p class="vi">Sử dụng transceiver SN65HVD230DR. Điện trở đầu cuối 120Ω đã có sẵn trên board.</p>
@@ -380,22 +830,30 @@
 
         <!-- PINOUT SCSI -->
         <section id="pinout">
-            <h2><i class="fas fa-plug"></i> <span class="vi">Tra cứu Pin SCSI (Full 100-Pin)</span><span class="en">SCSI Pinout (Full 100-Pin)</span></h2>
+            <h2><i class="fas fa-plug"></i> <span class="vi">Tra cứu Pin SCSI (Full 100-Pin)</span><span class="en">SCSI
+                    Pinout (Full 100-Pin)</span></h2>
             <div class="notice notice-info">
-                <span class="vi">Sử dụng thanh tìm kiếm để tra cứu nhanh. Xem chi tiết tại <a href="SCSI_100Pin_Connector_Guide.html" target="_blank" style="color:var(--accent); text-decoration:underline;">Datasheet đầy đủ</a>.</span>
-                <span class="en">Use the search bar to find signals. See details in the <a href="SCSI_100Pin_Connector_Guide.html" target="_blank" style="color:var(--accent); text-decoration:underline;">Full Datasheet</a>.</span>
+                <span class="vi">Sử dụng thanh tìm kiếm để tra cứu nhanh. Xem chi tiết tại <a
+                        href="SCSI_100Pin_Connector_Guide.html" target="_blank"
+                        style="color:var(--accent); text-decoration:underline;">Datasheet đầy đủ</a>.</span>
+                <span class="en">Use the search bar to find signals. See details in the <a
+                        href="SCSI_100Pin_Connector_Guide.html" target="_blank"
+                        style="color:var(--accent); text-decoration:underline;">Full Datasheet</a>.</span>
             </div>
             <div class="lang-switch" style="margin: 10px 0; background:none; padding:0">
-                <input type="text" id="pinSearch" placeholder="Search signals..." style="width:100%; padding:10px; border:1px solid var(--border); border-radius:6px">
+                <input type="text" id="pinSearch" placeholder="Search signals..."
+                    style="width:100%; padding:10px; border:1px solid var(--border); border-radius:6px">
             </div>
             <div class="table-wrap" style="max-height: 600px; overflow-y: auto;">
                 <table id="pinTable">
                     <thead>
                         <tr>
                             <th style="width:50px">L</th>
-                            <th class="vi">Tín hiệu Trái</th><th class="en">Left Signal</th>
+                            <th class="vi">Tín hiệu Trái</th>
+                            <th class="en">Left Signal</th>
                             <th style="width:50px">R</th>
-                            <th class="vi">Tín hiệu Phải</th><th class="en">Right Signal</th>
+                            <th class="vi">Tín hiệu Phải</th>
+                            <th class="en">Right Signal</th>
                             <th>Type</th>
                         </tr>
                     </thead>
@@ -407,9 +865,13 @@
         </section>
 
         <section id="fpga-map">
-            <h2><i class="fas fa-microchip"></i> <span class="vi">Chi tiết Phân bổ chân FPGA</span><span class="en">FPGA Pin Mapping Details</span></h2>
-            <p class="vi">Dữ liệu được trích xuất trực tiếp từ tài liệu kỹ thuật của Module <strong>ALINX AC7A035</strong> (Xilinx XC7A35T-2FGG484I) kết hợp với Schematic <strong>HBQ Artix-7 Motion Control Card</strong>.</p>
-            <p class="en">Data extracted from <strong>ALINX AC7A035</strong> (Xilinx XC7A35T-2FGG484I) Module reference and <strong>HBQ Artix-7 Motion Control Card</strong> Schematic.</p>
+            <h2><i class="fas fa-microchip"></i> <span class="vi">Chi tiết Phân bổ chân FPGA</span><span class="en">FPGA
+                    Pin Mapping Details</span></h2>
+            <p class="vi">Dữ liệu được trích xuất trực tiếp từ tài liệu kỹ thuật của Module <strong>ALINX
+                    AC7A035</strong> (Xilinx XC7A35T-2FGG484I) kết hợp với Schematic <strong>HBQ Artix-7 Motion Control
+                    Card</strong>.</p>
+            <p class="en">Data extracted from <strong>ALINX AC7A035</strong> (Xilinx XC7A35T-2FGG484I) Module reference
+                and <strong>HBQ Artix-7 Motion Control Card</strong> Schematic.</p>
 
             <!-- 1. I/O Bank -->
             <h3 class="vi">1. Cấu hình Bank I/O & Điện áp</h3>
@@ -417,14 +879,51 @@
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Bank</th><th class="vi">Điện áp VCCO</th><th class="en">VCCO Voltage</th><th>IOSTANDARD</th><th class="vi">Mô tả chức năng</th><th class="en">Functional Description</th></tr>
+                        <tr>
+                            <th>Bank</th>
+                            <th class="vi">Điện áp VCCO</th>
+                            <th class="en">VCCO Voltage</th>
+                            <th>IOSTANDARD</th>
+                            <th class="vi">Mô tả chức năng</th>
+                            <th class="en">Functional Description</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td><strong>B13</strong></td><td>3.3V</td><td>LVCMOS33</td><td class="vi">USB 3.0 Control, GPIO, LED</td><td class="en">USB 3.0 Control, GPIO, LED</td></tr>
-                        <tr><td><strong>B14</strong></td><td>3.3V</td><td>LVCMOS33</td><td class="vi">USB 3.0 Data Bus (32-bit)</td><td class="en">USB 3.0 Data Bus (32-bit)</td></tr>
-                        <tr><td><strong>B15</strong></td><td>3.3V</td><td>LVCMOS33</td><td class="vi">Motor, Encoder, DAC/ADC SPI</td><td class="en">Motor, Encoder, DAC/ADC SPI</td></tr>
-                        <tr><td><strong>B16</strong></td><td>3.3V</td><td>LVCMOS33</td><td class="vi">Motor, ISO OUT, CAN, Modbus, FMC Bus</td><td class="en">Motor, ISO OUT, CAN, Modbus, FMC Bus</td></tr>
-                        <tr><td><strong>B34</strong></td><td>1.5V / 3.3V</td><td>Variable</td><td class="vi">XADC, FMC Address, Special IO</td><td class="en">XADC, FMC Address, Special IO</td></tr>
+                        <tr>
+                            <td><strong>B13</strong></td>
+                            <td>3.3V</td>
+                            <td>LVCMOS33</td>
+                            <td class="vi">USB 3.0 Control, GPIO, LED</td>
+                            <td class="en">USB 3.0 Control, GPIO, LED</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B14</strong></td>
+                            <td>3.3V</td>
+                            <td>LVCMOS33</td>
+                            <td class="vi">USB 3.0 Data Bus (32-bit)</td>
+                            <td class="en">USB 3.0 Data Bus (32-bit)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B15</strong></td>
+                            <td>3.3V</td>
+                            <td>LVCMOS33</td>
+                            <td class="vi">Motor, Encoder, DAC/ADC SPI</td>
+                            <td class="en">Motor, Encoder, DAC/ADC SPI</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B16</strong></td>
+                            <td>3.3V</td>
+                            <td>LVCMOS33</td>
+                            <td class="vi">Motor, ISO OUT, CAN, Modbus, FMC Bus</td>
+                            <td class="en">Motor, ISO OUT, CAN, Modbus, FMC Bus</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B34</strong></td>
+                            <td>1.5V / 3.3V</td>
+                            <td>Variable</td>
+                            <td class="vi">XADC, FMC Address, Special IO</td>
+                            <td class="en">XADC, FMC Address, Special IO</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -434,19 +933,43 @@
             <h3 class="en">2. USB 3.0 Interface (FT601Q Buffer)</h3>
             <div class="card-grid">
                 <div class="card">
-                    <h4 class="vi">Control Signals</h4><h4 class="en">Control Signals</h4>
+                    <h4 class="vi">Control Signals</h4>
+                    <h4 class="en">Control Signals</h4>
                     <table style="font-size: 0.8rem;">
-                        <tr><td>USB_CLK</td><td><span class="mono">Y22</span></td><td>Clock 100MHz (In)</td></tr>
-                        <tr><td>USB_TXE_N</td><td><span class="mono">U17</span></td><td>TX FIFO Empty</td></tr>
-                        <tr><td>USB_RXF_N</td><td><span class="mono">U18</span></td><td>RX FIFO Full</td></tr>
-                        <tr><td>USB_WR_N</td><td><span class="mono">R19</span></td><td>Write Strobe</td></tr>
-                        <tr><td>USB_RST</td><td><span class="mono">C13</span></td><td>Chip Reset</td></tr>
+                        <tr>
+                            <td>USB_CLK</td>
+                            <td><span class="mono">Y22</span></td>
+                            <td>Clock 100MHz (In)</td>
+                        </tr>
+                        <tr>
+                            <td>USB_TXE_N</td>
+                            <td><span class="mono">U17</span></td>
+                            <td>TX FIFO Empty</td>
+                        </tr>
+                        <tr>
+                            <td>USB_RXF_N</td>
+                            <td><span class="mono">U18</span></td>
+                            <td>RX FIFO Full</td>
+                        </tr>
+                        <tr>
+                            <td>USB_WR_N</td>
+                            <td><span class="mono">R19</span></td>
+                            <td>Write Strobe</td>
+                        </tr>
+                        <tr>
+                            <td>USB_RST</td>
+                            <td><span class="mono">C13</span></td>
+                            <td>Chip Reset</td>
+                        </tr>
                     </table>
                 </div>
                 <div class="card">
-                    <h4 class="vi">Data Bus (32-bit)</h4><h4 class="en">Data Bus (32-bit)</h4>
-                    <p class="vi">Bus dữ liệu <span class="mono">USB_DATA[0..31]</span> thuộc Bank 14. Xem chi tiết trong file XDC bên dưới.</p>
-                    <p class="en"><span class="mono">USB_DATA[0..31]</span> bus belongs to Bank 14. See XDC block for specific package pins.</p>
+                    <h4 class="vi">Data Bus (32-bit)</h4>
+                    <h4 class="en">Data Bus (32-bit)</h4>
+                    <p class="vi">Bus dữ liệu <span class="mono">USB_DATA[0..31]</span> thuộc Bank 14. Xem chi tiết
+                        trong file XDC bên dưới.</p>
+                    <p class="en"><span class="mono">USB_DATA[0..31]</span> bus belongs to Bank 14. See XDC block for
+                        specific package pins.</p>
                 </div>
             </div>
 
@@ -456,16 +979,58 @@
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Signal</th><th>FPGA Net</th><th>Bank</th><th class="vi">Chức năng</th><th class="en">Function</th></tr>
+                        <tr>
+                            <th>Signal</th>
+                            <th>FPGA Net</th>
+                            <th>Bank</th>
+                            <th class="vi">Chức năng</th>
+                            <th class="en">Function</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td><strong>Motor PWM/DIR</strong></td><td colspan="4" style="background:#f9f9f9"></td></tr>
-                        <tr><td>MDR_PWM1</td><td>B15_L12_P</td><td>B15</td><td class="vi">Xung điều khiển Trục 1</td><td class="en">Axis 1 PWM</td></tr>
-                        <tr><td>MDR_DIR1</td><td>B15_L12_N</td><td>B15</td><td class="vi">Hướng điều khiển Trục 1</td><td class="en">Axis 1 DIR</td></tr>
-                        <tr><td>MDR_PWM2</td><td>B15_L10_N</td><td>B15</td><td class="vi">Xung điều khiển Trục 2</td><td class="en">Axis 2 PWM</td></tr>
-                        <tr><td><strong>Encoder A/B/Z</strong></td><td colspan="4" style="background:#f9f9f9"></td></tr>
-                        <tr><td>ENC1_A/B/Z</td><td>B15_L20/L19</td><td>B15</td><td class="vi">Encoder feedback Trục 1</td><td class="en">Axis 1 Feedback</td></tr>
-                        <tr><td>ENC2_A/B/Z</td><td>B15_L8/L3</td><td>B15</td><td class="vi">Encoder feedback Trục 2</td><td class="en">Axis 2 Feedback</td></tr>
+                        <tr>
+                            <td><strong>Motor PWM/DIR</strong></td>
+                            <td colspan="4" style="background:#f9f9f9"></td>
+                        </tr>
+                        <tr>
+                            <td>MDR_PWM1</td>
+                            <td>B15_L12_P</td>
+                            <td>B15</td>
+                            <td class="vi">Xung điều khiển Trục 1</td>
+                            <td class="en">Axis 1 PWM</td>
+                        </tr>
+                        <tr>
+                            <td>MDR_DIR1</td>
+                            <td>B15_L12_N</td>
+                            <td>B15</td>
+                            <td class="vi">Hướng điều khiển Trục 1</td>
+                            <td class="en">Axis 1 DIR</td>
+                        </tr>
+                        <tr>
+                            <td>MDR_PWM2</td>
+                            <td>B15_L10_N</td>
+                            <td>B15</td>
+                            <td class="vi">Xung điều khiển Trục 2</td>
+                            <td class="en">Axis 2 PWM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Encoder A/B/Z</strong></td>
+                            <td colspan="4" style="background:#f9f9f9"></td>
+                        </tr>
+                        <tr>
+                            <td>ENC1_A/B/Z</td>
+                            <td>B15_L20/L19</td>
+                            <td>B15</td>
+                            <td class="vi">Encoder feedback Trục 1</td>
+                            <td class="en">Axis 1 Feedback</td>
+                        </tr>
+                        <tr>
+                            <td>ENC2_A/B/Z</td>
+                            <td>B15_L8/L3</td>
+                            <td>B15</td>
+                            <td class="vi">Encoder feedback Trục 2</td>
+                            <td class="en">Axis 2 Feedback</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -476,16 +1041,60 @@
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Interface</th><th>Signal</th><th>FPGA Pin</th><th>IOStandard</th><th class="vi">Mô tả</th><th class="en">Description</th></tr>
+                        <tr>
+                            <th>Interface</th>
+                            <th>Signal</th>
+                            <th>FPGA Pin</th>
+                            <th>IOStandard</th>
+                            <th class="vi">Mô tả</th>
+                            <th class="en">Description</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td rowspan="4"><strong>DAC81404</strong></td><td>DAC_SCLK</td><td><span class="mono">G22</span></td><td>LVCMOS33</td><td>SPI Clock</td></tr>
-                        <tr><td>DAC_MOSI</td><td><span class="mono">G20</span></td><td>LVCMOS33</td><td>Master Out Slave In</td></tr>
-                        <tr><td>DAC_MISO</td><td><span class="mono">G21</span></td><td>LVCMOS33</td><td>Master In Slave Out</td></tr>
-                        <tr><td>DAC_CS</td><td><span class="mono">H20</span></td><td>LVCMOS33</td><td>Chip Select</td></tr>
-                        <tr><td rowspan="3"><strong>AD7606C</strong></td><td>ADC_SER_SCLK</td><td><span class="mono">J22</span> (?)</td><td>LVCMOS33</td><td>Serial Clock</td></tr>
-                        <tr><td>ADC_SER_CS</td><td><span class="mono">H22</span> (?)</td><td>LVCMOS33</td><td>Chip Select</td></tr>
-                        <tr><td>ADC_BUSY</td><td><span class="mono">V11</span></td><td>LVCMOS33</td><td>Conversion Status</td></tr>
+                        <tr>
+                            <td rowspan="4"><strong>DAC81404</strong></td>
+                            <td>DAC_SCLK</td>
+                            <td><span class="mono">G22</span></td>
+                            <td>LVCMOS33</td>
+                            <td>SPI Clock</td>
+                        </tr>
+                        <tr>
+                            <td>DAC_MOSI</td>
+                            <td><span class="mono">G20</span></td>
+                            <td>LVCMOS33</td>
+                            <td>Master Out Slave In</td>
+                        </tr>
+                        <tr>
+                            <td>DAC_MISO</td>
+                            <td><span class="mono">G21</span></td>
+                            <td>LVCMOS33</td>
+                            <td>Master In Slave Out</td>
+                        </tr>
+                        <tr>
+                            <td>DAC_CS</td>
+                            <td><span class="mono">H20</span></td>
+                            <td>LVCMOS33</td>
+                            <td>Chip Select</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3"><strong>AD7606C</strong></td>
+                            <td>ADC_SER_SCLK</td>
+                            <td><span class="mono">J22</span> (?)</td>
+                            <td>LVCMOS33</td>
+                            <td>Serial Clock</td>
+                        </tr>
+                        <tr>
+                            <td>ADC_SER_CS</td>
+                            <td><span class="mono">H22</span> (?)</td>
+                            <td>LVCMOS33</td>
+                            <td>Chip Select</td>
+                        </tr>
+                        <tr>
+                            <td>ADC_BUSY</td>
+                            <td><span class="mono">V11</span></td>
+                            <td>LVCMOS33</td>
+                            <td>Conversion Status</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -496,13 +1105,42 @@
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>FMC Signal</th><th>FPGA Pin (B16)</th><th>MCU Pin (H743)</th><th class="vi">Ghi chú</th><th class="en">Notes</th></tr>
+                        <tr>
+                            <th>FMC Signal</th>
+                            <th>FPGA Pin (B16)</th>
+                            <th>MCU Pin (H743)</th>
+                            <th class="vi">Ghi chú</th>
+                            <th class="en">Notes</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>FMC_A16..23</td><td>CN4: 41..57</td><td>PD11..PE2</td><td class="vi">Bus địa chỉ FMC</td><td class="en">FMC Address Bus</td></tr>
-                        <tr><td>FMC_DA0..15</td><td>CN4: 41R..</td><td>PD14..PD1</td><td class="vi">Bus dữ liệu 16-bit</td><td class="en">16-bit Data Bus</td></tr>
-                        <tr><td>FMC_NOE / NWE</td><td>Bank 16</td><td>PD4 / PD5</td><td class="vi">Tín hiệu Read/Write enable</td><td class="en">Read/Write Enable</td></tr>
-                        <tr><td>FMC_NE1</td><td>Bank 16</td><td>PD7</td><td>Chip Select MCU Side</td></tr>
+                        <tr>
+                            <td>FMC_A16..23</td>
+                            <td>CN4: 41..57</td>
+                            <td>PD11..PE2</td>
+                            <td class="vi">Bus địa chỉ FMC</td>
+                            <td class="en">FMC Address Bus</td>
+                        </tr>
+                        <tr>
+                            <td>FMC_DA0..15</td>
+                            <td>CN4: 41R..</td>
+                            <td>PD14..PD1</td>
+                            <td class="vi">Bus dữ liệu 16-bit</td>
+                            <td class="en">16-bit Data Bus</td>
+                        </tr>
+                        <tr>
+                            <td>FMC_NOE / NWE</td>
+                            <td>Bank 16</td>
+                            <td>PD4 / PD5</td>
+                            <td class="vi">Tín hiệu Read/Write enable</td>
+                            <td class="en">Read/Write Enable</td>
+                        </tr>
+                        <tr>
+                            <td>FMC_NE1</td>
+                            <td>Bank 16</td>
+                            <td>PD7</td>
+                            <td>Chip Select MCU Side</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -513,13 +1151,38 @@
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Function</th><th>Signal Name</th><th>FPGA Net</th><th>Bank</th></tr>
+                        <tr>
+                            <th>Function</th>
+                            <th>Signal Name</th>
+                            <th>FPGA Net</th>
+                            <th>Bank</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td><strong>CAN FD</strong></td><td>FPGA_CAN_TX/RX</td><td>B16_L6_N/P</td><td>Bank 16</td></tr>
-                        <tr><td><strong>RS-485 Modbus</strong></td><td>FPGA_MODBUS_TX/RX</td><td>B16_L4_N/P</td><td>Bank 16</td></tr>
-                        <tr><td><strong>XADC Analog</strong></td><td>XADC_VP / VN</td><td>AD0P / AD0N</td><td>Bank 34</td></tr>
-                        <tr><td><strong>PCIe Reset</strong></td><td>PCIE_RESET</td><td>B16_L8_N</td><td>Bank 16</td></tr>
+                        <tr>
+                            <td><strong>CAN FD</strong></td>
+                            <td>FPGA_CAN_TX/RX</td>
+                            <td>B16_L6_N/P</td>
+                            <td>Bank 16</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RS-485 Modbus</strong></td>
+                            <td>FPGA_MODBUS_TX/RX</td>
+                            <td>B16_L4_N/P</td>
+                            <td>Bank 16</td>
+                        </tr>
+                        <tr>
+                            <td><strong>XADC Analog</strong></td>
+                            <td>XADC_VP / VN</td>
+                            <td>AD0P / AD0N</td>
+                            <td>Bank 34</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PCIe Reset</strong></td>
+                            <td>PCIE_RESET</td>
+                            <td>B16_L8_N</td>
+                            <td>Bank 16</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -529,128 +1192,62 @@
             <h3 class="en">7. PCIe Gen2 x4 & GTP Transceiver</h3>
             <div class="card-grid">
                 <div class="card">
-                    <h4 class="vi">Reference Clock</h4><h4 class="en">Reference Clock</h4>
+                    <h4 class="vi">Reference Clock</h4>
+                    <h4 class="en">Reference Clock</h4>
                     <p><span class="mono">clk_in_clk_p/n</span>: <strong>R4 / R3</strong> (Package Pin)</p>
                     <p class="vi">Tần số: 125MHz (SiT9102 differential).</p>
                     <p class="en">Frequency: 125MHz (SiT9102 differential).</p>
                 </div>
                 <div class="card">
-                    <h4 class="vi">GTP Lanes</h4><h4 class="en">GTP Lanes</h4>
+                    <h4 class="vi">GTP Lanes</h4>
+                    <h4 class="en">GTP Lanes</h4>
                     <p class="vi">4 lane MGT_TX/RX kết nối trực tiếp từ FPGA tới khe PCIe qua CN4.</p>
                     <p class="en">4 MGT_TX/RX lanes connected from FPGA to PCIe slot via CN4.</p>
                 </div>
             </div>
 
-            <h3 class="vi">8. File Constraints (XDC) Hoàn chỉnh</h3>
-            <h3 class="en">8. Full Constraints File (XDC)</h3>
-            <p class="vi">Sử dụng nội dung dưới đây làm template cho file <span class="mono">.xdc</span> trong project Vivado của bạn:</p>
-            <p class="en">Use the code below as a template for your <span class="mono">.xdc</span> file in Vivado:</p>
-
-            <div class="code-box">
-                <button class="copy-btn" onclick="copyCode('xdc-full')">Copy Full XDC</button>
-                <div id="xdc-full" style="white-space: pre;"># ============================================================
-# HBQ Artix-7 Motion Control Card — FPGA Pin Constraints (XDC)
-# FPGA: Xilinx XC7A35T-2FGG484I (ALINX AC7A035 module)
-# ============================================================
-
-# --- CLOCK ---
-set_property PACKAGE_PIN R4 [get_ports clk_in_clk_p]
-set_property IOSTANDARD DIFF_HSTL_II_18 [get_ports clk_in_clk_p]
-
-# --- USB 3.0 FT601Q CONTROL ---
-set_property PACKAGE_PIN U17 [get_ports txe_n]
-set_property PACKAGE_PIN U18 [get_ports rxf_n]
-set_property PACKAGE_PIN R19 [get_ports wr_n]
-set_property PACKAGE_PIN Y22 [get_ports usb_clk]
-set_property PACKAGE_PIN C13 [get_ports resetn]
-set_property IOSTANDARD LVCMOS33 [get_ports txe_n]
-set_property IOSTANDARD LVCMOS33 [get_ports rxf_n]
-set_property IOSTANDARD LVCMOS33 [get_ports wr_n]
-set_property IOSTANDARD LVCMOS33 [get_ports usb_clk]
-set_property IOSTANDARD LVCMOS33 [get_ports resetn]
-set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets usb_clk_IBUF]
-
-# --- USB 3.0 DATA BUS data[31:0] ---
-set_property PACKAGE_PIN R17 [get_ports {data[31]}]
-set_property PACKAGE_PIN P16 [get_ports {data[30]}]
-set_property PACKAGE_PIN P20 [get_ports {data[29]}]
-set_property PACKAGE_PIN N15 [get_ports {data[28]}]
-set_property PACKAGE_PIN N14 [get_ports {data[27]}]
-set_property PACKAGE_PIN N13 [get_ports {data[26]}]
-set_property PACKAGE_PIN P14 [get_ports {data[25]}]
-set_property PACKAGE_PIN R14 [get_ports {data[24]}]
-set_property PACKAGE_PIN R18 [get_ports {data[23]}]
-set_property PACKAGE_PIN T18 [get_ports {data[22]}]
-set_property PACKAGE_PIN U22 [get_ports {data[21]}]
-set_property PACKAGE_PIN V22 [get_ports {data[20]}]
-set_property PACKAGE_PIN Y18 [get_ports {data[19]}]
-set_property PACKAGE_PIN Y19 [get_ports {data[18]}]
-set_property PACKAGE_PIN W19 [get_ports {data[17]}]
-set_property PACKAGE_PIN W20 [get_ports {data[16]}]
-set_property PACKAGE_PIN Y21 [get_ports {data[15]}]
-set_property PACKAGE_PIN U21 [get_ports {data[14]}]
-set_property PACKAGE_PIN T21 [get_ports {data[13]}]
-set_property PACKAGE_PIN W21 [get_ports {data[12]}]
-set_property PACKAGE_PIN W22 [get_ports {data[11]}]
-set_property PACKAGE_PIN T20 [get_ports {data[10]}]
-set_property PACKAGE_PIN AB18 [get_ports {data[9]}]
-set_property PACKAGE_PIN AA18 [get_ports {data[8]}]
-set_property PACKAGE_PIN AA19 [get_ports {data[7]}]
-set_property PACKAGE_PIN AB20 [get_ports {data[6]}]
-set_property PACKAGE_PIN AA20 [get_ports {data[5]}]
-set_property PACKAGE_PIN AA21 [get_ports {data[4]}]
-set_property PACKAGE_PIN AB22 [get_ports {data[3]}]
-set_property PACKAGE_PIN AB21 [get_ports {data[2]}]
-set_property PACKAGE_PIN W17 [get_ports {data[1]}]
-set_property PACKAGE_PIN V17 [get_ports {data[0]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {data[*]}]
-
-# --- DAC SPI ---
-set_property PACKAGE_PIN G21 [get_ports miso]
-set_property PACKAGE_PIN G22 [get_ports sclk]
-set_property PACKAGE_PIN G20 [get_ports mosi]
-set_property PACKAGE_PIN H20 [get_ports cs]
-set_property PACKAGE_PIN H22 [get_ports LDAC]
-set_property PACKAGE_PIN K21 [get_ports RST]
-set_property PACKAGE_PIN J22 [get_ports CLR]
-set_property IOSTANDARD LVCMOS33 [get_ports miso]
-set_property IOSTANDARD LVCMOS33 [get_ports sclk]
-set_property IOSTANDARD LVCMOS33 [get_ports mosi]
-set_property IOSTANDARD LVCMOS33 [get_ports cs]
-set_property IOSTANDARD LVCMOS33 [get_ports LDAC]
-set_property IOSTANDARD LVCMOS33 [get_ports RST]
-set_property IOSTANDARD LVCMOS33 [get_ports CLR]
-
-# --- STATUS LEDs ---
-set_property PACKAGE_PIN L18 [get_ports vang]
-set_property PACKAGE_PIN N19 [get_ports xanh]
-set_property IOSTANDARD LVCMOS33 [get_ports vang]
-set_property IOSTANDARD LVCMOS33 [get_ports xanh]</div>
+            <h3 class="vi">8. File Constraints (XDC)</h3>
+            <h3 class="en">8. Constraints File (XDC)</h3>
+            <div class="notice notice-info">
+                <p class="vi"><i class="fas fa-file-code"></i> Tải xuống hoặc xem file cấu hình chân đầy đủ tại đây: <a
+                        href="artix7_35K_pin_assignment.xdc" target="_blank"
+                        style="font-weight:bold; color:var(--accent); text-decoration:underline;">artix7_35K_pin_assignment.xdc</a>
+                </p>
+                <p class="en"><i class="fas fa-file-code"></i> Download or view the full pin configuration file here: <a
+                        href="artix7_35K_pin_assignment.xdc" target="_blank"
+                        style="font-weight:bold; color:var(--accent); text-decoration:underline;">artix7_35K_pin_assignment.xdc</a>
+                </p>
             </div>
         </section>
 
         <!-- VIVADO WORKFLOW -->
         <section id="vivado">
-            <h2><i class="fas fa-tools"></i> <span class="vi">Hướng dẫn phát triển Vivado</span><span class="en">Vivado Development Workflow</span></h2>
+            <h2><i class="fas fa-tools"></i> <span class="vi">Hướng dẫn phát triển Vivado</span><span class="en">Vivado
+                    Development Workflow</span></h2>
             <div data-lang-block>
                 <div class="vi">
                     <p>1. <strong>Thiết lập Project:</strong> Chọn part <code>xc7a35tfgg484-2</code>.</p>
-                    <p>2. <strong>Clocking:</strong> Source clock vi sai 125MHz chân R4 (GTP ref). Tạo logic clock 100MHz từ MMCM.</p>
+                    <p>2. <strong>Clocking:</strong> Source clock vi sai 125MHz chân R4 (GTP ref). Tạo logic clock
+                        100MHz từ MMCM.</p>
                     <p>3. <strong>PCIe Gen2 IP:</strong> Cấu hình X4, BAR0 size 64KB (Axi-Lite) cho register map.</p>
-                    <p>4. <strong>Lưu ý:</strong> Cần khai báo <code>CLOCK_DEDICATED_ROUTE FALSE</code> cho chân usb_clk trong XDC.</p>
+                    <p>4. <strong>Lưu ý:</strong> Cần khai báo <code>CLOCK_DEDICATED_ROUTE FALSE</code> cho chân usb_clk
+                        trong XDC.</p>
                 </div>
                 <div class="en">
                     <p>1. <strong>Project Setup:</strong> Select part <code>xc7a35tfgg484-2</code>.</p>
-                    <p>2. <strong>Clocking:</strong> Source 125MHz differential clock on pin R4 (GTP ref). Generate 100MHz logic clock via MMCM.</p>
+                    <p>2. <strong>Clocking:</strong> Source 125MHz differential clock on pin R4 (GTP ref). Generate
+                        100MHz logic clock via MMCM.</p>
                     <p>3. <strong>PCIe Gen2 IP:</strong> Configure X4, BAR0 size 64KB (Axi-Lite) for register map.</p>
-                    <p>4. <strong>Note:</strong> <code>CLOCK_DEDICATED_ROUTE FALSE</code> must be declared for the usb_clk pin in XDC.</p>
+                    <p>4. <strong>Note:</strong> <code>CLOCK_DEDICATED_ROUTE FALSE</code> must be declared for the
+                        usb_clk pin in XDC.</p>
                 </div>
             </div>
         </section>
 
         <!-- PROGRAMMING & DEBUG -->
         <section id="debug">
-            <h2><i class="fas fa-terminal"></i> <span class="vi">Lập trình & Debug</span><span class="en">Programming & Debug</span></h2>
+            <h2><i class="fas fa-terminal"></i> <span class="vi">Lập trình & Debug</span><span class="en">Programming &
+                    Debug</span></h2>
             <h3 class="vi">1. FPGA JTAG (CN9)</h3>
             <h3 class="en">1. FPGA JTAG (CN9)</h3>
             <p class="vi">Sử dụng Platform Cable USB II. Connector 10-pin pitch 2.54mm.</p>
@@ -666,11 +1263,23 @@ set_property IOSTANDARD LVCMOS33 [get_ports xanh]</div>
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>LED</th><th>Signal</th><th>Meaning</th></tr>
+                        <tr>
+                            <th>LED</th>
+                            <th>Signal</th>
+                            <th>Meaning</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>LED Vàng</td><td>L18</td><td>FPGA Status / Config done</td></tr>
-                        <tr><td>LED Xanh</td><td>N19</td><td>Firmware heartbeat</td></tr>
+                        <tr>
+                            <td>LED Vàng</td>
+                            <td>L18</td>
+                            <td>FPGA Status / Config done</td>
+                        </tr>
+                        <tr>
+                            <td>LED Xanh</td>
+                            <td>N19</td>
+                            <td>Firmware heartbeat</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -698,22 +1307,22 @@ set_property IOSTANDARD LVCMOS33 [get_ports xanh]</div>
         }
 
         const fullPinData = [
-            {l: 1, sl: 'MODBUS2_B', r: 51, sr: 'GND (12V Opt)', type: '485'},
-            {l: 2, sl: 'MODBUS2_A', r: 52, sr: 'GND', type: 'gnd'},
-            {l: 3, sl: 'MODBUS1_B', r: 53, sr: 'GND', type: 'gnd'},
-            {l: 4, sl: 'MODBUS1_A', r: 54, sr: 'CAN2_N', type: 'can'},
-            {l: 5, sl: 'MDR_DIR3−', r: 55, sr: 'CAN2_P', type: 'mtr'},
-            {l: 6, sl: 'MDR_DIR3+', r: 56, sr: 'CAN1_N', type: 'can'},
-            {l: 7, sl: 'MDR_PWM3−', r: 57, sr: 'CAN1_P', type: 'can'},
-            {l: 11, sl: 'MDR_PWM1−', r: 61, sr: 'MDR_PWM4+', type: 'mtr'},
-            {l: 12, sl: 'MDR_PWM1+', r: 62, sr: 'MDR_DIR2−', type: 'mtr'},
-            {l: 27, sl: 'ENC_1A+', r: 77, sr: 'ENC_1Z+', type: 'enc'},
-            {l: 33, sl: 'IN_ISOV+', r: 83, sr: 'ISO_IN1', type: 'iso'},
-            {l: 34, sl: 'IN_ISOGND', r: 84, sr: 'ISO_OUT5', type: 'iso'},
-            {l: 35, sl: 'OUT_ISOV+', r: 85, sr: 'ISO_OUT6', type: 'iso'},
-            {l: 36, sl: 'OUT_ISOGND', r: 86, sr: 'ISO_OUT7', type: 'iso'},
-            {l: 43, sl: 'AI_IN8+', r: 93, sr: 'AI_IN1+', type: 'adc'},
-            {l: 92, sl: 'GND', r: 100, sr: 'AI_IN4−', type: 'pwr'}
+            { l: 1, sl: 'MODBUS2_B', r: 51, sr: 'GND (12V Opt)', type: '485' },
+            { l: 2, sl: 'MODBUS2_A', r: 52, sr: 'GND', type: 'gnd' },
+            { l: 3, sl: 'MODBUS1_B', r: 53, sr: 'GND', type: 'gnd' },
+            { l: 4, sl: 'MODBUS1_A', r: 54, sr: 'CAN2_N', type: 'can' },
+            { l: 5, sl: 'MDR_DIR3−', r: 55, sr: 'CAN2_P', type: 'mtr' },
+            { l: 6, sl: 'MDR_DIR3+', r: 56, sr: 'CAN1_N', type: 'can' },
+            { l: 7, sl: 'MDR_PWM3−', r: 57, sr: 'CAN1_P', type: 'can' },
+            { l: 11, sl: 'MDR_PWM1−', r: 61, sr: 'MDR_PWM4+', type: 'mtr' },
+            { l: 12, sl: 'MDR_PWM1+', r: 62, sr: 'MDR_DIR2−', type: 'mtr' },
+            { l: 27, sl: 'ENC_1A+', r: 77, sr: 'ENC_1Z+', type: 'enc' },
+            { l: 33, sl: 'IN_ISOV+', r: 83, sr: 'ISO_IN1', type: 'iso' },
+            { l: 34, sl: 'IN_ISOGND', r: 84, sr: 'ISO_OUT5', type: 'iso' },
+            { l: 35, sl: 'OUT_ISOV+', r: 85, sr: 'ISO_OUT6', type: 'iso' },
+            { l: 36, sl: 'OUT_ISOGND', r: 86, sr: 'ISO_OUT7', type: 'iso' },
+            { l: 43, sl: 'AI_IN8+', r: 93, sr: 'AI_IN1+', type: 'adc' },
+            { l: 92, sl: 'GND', r: 100, sr: 'AI_IN4−', type: 'pwr' }
             // Add more as needed
         ];
 
@@ -721,7 +1330,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports xanh]</div>
             const body = document.getElementById('pinBody');
             body.innerHTML = '';
             fullPinData.forEach(p => {
-                if(query && !p.sl.toLowerCase().includes(query.toLowerCase()) && !p.sr.toLowerCase().includes(query.toLowerCase())) return;
+                if (query && !p.sl.toLowerCase().includes(query.toLowerCase()) && !p.sr.toLowerCase().includes(query.toLowerCase())) return;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td style="color:var(--text-muted)">${p.l}</td>
@@ -738,4 +1347,5 @@ set_property IOSTANDARD LVCMOS33 [get_ports xanh]</div>
         renderPins();
     </script>
 </body>
+
 </html>
