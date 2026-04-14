@@ -225,7 +225,8 @@ Cách ly qua / Isolated via: **ISO7740FDBQR** × 4 IC · 2500 VRMS · 150 Mbps
 
 ## 9. Kiến trúc nguồn / Power Architecture
 
-![Block diagram](Power Scheme 2.jpg)
+![Power Scheme 2](https://github.com/user-attachments/assets/14464176-26ee-41bd-b3c2-b728f9ae3fdf)
+
 
 #### Nguồn cách ly cho I/O (Isolated I/O Power)
 Để sử dụng Digital Input/Output cách ly trên connector J7A, người dùng **bắt buộc** phải cấp nguồn ngoài (5–30V DC) vào các chân chuyên dụng:
@@ -538,7 +539,8 @@ RS-485 Device             J7A Connector
 
 ## 13. Sơ đồ khối / Block Diagram
 
-![Block diagram](HBQ_PCIe_BaseCard_V2 Block diagram.jpg)
+![HBQ_PCIe_BaseCard_V2 Block diagram](https://github.com/user-attachments/assets/e60723db-7f29-4d06-ac2d-f78957aaa32d)
+
 ---
 
 ## 12. Phân bổ chân FPGA / FPGA Pin Assignment
@@ -651,5 +653,3 @@ Dành cho kỹ sư phát triển firmware FPGA trên môi trường **Xilinx Viv
 ---
 
 *🏭 HBQ Technology · www.hbqtechnology.com*  
-*📄 Tài liệu được tạo từ / Document generated from: `Sch_PCIEBaseCard_Rev2_0.pdf` (9 sheets)*  
-*🔧 FPGA: Xilinx Artix-7 XC7A35T · MCU: STM32H743VIT6 · USB: FT601Q · ADC: AD7606C · DAC: DAC81404*
