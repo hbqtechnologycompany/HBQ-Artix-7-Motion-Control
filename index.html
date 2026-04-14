@@ -123,7 +123,8 @@
 
         <div class="nav-group">
             <div class="nav-title">Connections</div>
-            <a href="#pinout" class="nav-link"><i class="fas fa-plug"></i> J7A 100-Pin Full</a>
+            <a href="#pinout" class="nav-link"><i class="fas fa-plug"></i> SCSI 100-Pin Full</a>
+            <a href="SCSI_100Pin_Connector_Guide.html" class="nav-link" target="_blank"><i class="fas fa-file-alt"></i> SCSI Connector Datasheet</a>
             <a href="#fpga-map" class="nav-link"><i class="fas fa-microchip"></i> Pin Assignment (XDC)</a>
         </div>
 
@@ -164,8 +165,8 @@
                 <div style="padding: 16px; background: #fdfdfd; border-top: 1px solid var(--border);">
                     <p class="vi" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-microchip"></i> Thành phần linh kiện trên Board</p>
                     <p class="en" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;"><i class="fas fa-microchip"></i> On-board Component Layout</p>
-                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Bố cục phần cứng với các vị trí trung tâm của FPGA, MCU, chip USB 3.0 và hệ thống các Connector ngoại vi (J7A, PCIe, USB-C) và LED chỉ thị trạng thái.</p>
-                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">Hardware layout highlighting the central positions of the FPGA, MCU, USB 3.0 controller, and the peripheral connector array (J7A, PCIe, USB-C) along with status indicator LEDs.</p>
+                    <p class="vi" style="font-size: 0.85rem; color: var(--text-muted);">Bố cục phần cứng với các vị trí trung tâm của FPGA, MCU, chip USB 3.0 và hệ thống các Connector ngoại vi (SCSI, PCIe, USB-C) và LED chỉ thị trạng thái.</p>
+                    <p class="en" style="font-size: 0.85rem; color: var(--text-muted);">Hardware layout highlighting the central positions of the FPGA, MCU, USB 3.0 controller, and the peripheral connector array (SCSI, PCIe, USB-C) along with status indicator LEDs.</p>
                 </div>
             </div>
             
@@ -326,7 +327,7 @@
             <div class="table-wrap">
                 <table>
                     <thead>
-                        <tr><th>Trục / Axis</th><th>FPGA PWM Pin</th><th>FPGA DIR Pin</th><th>J7A Pins</th></tr>
+                        <tr><th>Trục / Axis</th><th>FPGA PWM Pin</th><th>FPGA DIR Pin</th><th>SCSI Pins</th></tr>
                     </thead>
                     <tbody>
                         <tr><td>Motor 1</td><td><span class="mono">L12_P</span></td><td><span class="mono">L12_N</span></td><td>Pin 12 / Pin 10</td></tr>
@@ -366,23 +367,23 @@
             <h3 class="en">1. CAN FD (2 Ports)</h3>
             <p class="vi">Sử dụng transceiver SN65HVD230DR. Điện trở đầu cuối 120Ω đã có sẵn trên board.</p>
             <p class="en">Uses SN65HVD230DR transceivers. 120Ω on-board termination resistors included.</p>
-            <p class="mono vi">CAN1: J7A Pins 57(P), 56(N) | CAN2: J7A Pins 55(P), 54(N)</p>
-            <p class="mono en">CAN1: J7A Pins 57(P), 56(N) | CAN2: J7A Pins 55(P), 54(N)</p>
+            <p class="mono vi">CAN1: SCSI Pins 57(P), 56(N) | CAN2: SCSI Pins 55(P), 54(N)</p>
+            <p class="mono en">CAN1: SCSI Pins 57(P), 56(N) | CAN2: SCSI Pins 55(P), 54(N)</p>
 
             <h3 class="vi">2. RS-485 / Modbus RTU</h3>
             <h3 class="en">2. RS-485 / Modbus RTU</h3>
             <p class="vi">Sử dụng ADM3065EARZ, chế độ Half-duplex với tính năng tự động chuyển hướng TX/RX.</p>
             <p class="en">Uses ADM3065EARZ, Half-duplex mode with automatic TX/RX direction control.</p>
-            <p class="mono vi">MB1: J7A Pins 4(A), 3(B) | MB2: J7A Pins 2(A), 1(B)</p>
-            <p class="mono en">MB1: J7A Pins 4(A), 3(B) | MB2: J7A Pins 2(A), 1(B)</p>
+            <p class="mono vi">MB1: SCSI Pins 4(A), 3(B) | MB2: SCSI Pins 2(A), 1(B)</p>
+            <p class="mono en">MB1: SCSI Pins 4(A), 3(B) | MB2: SCSI Pins 2(A), 1(B)</p>
         </section>
 
-        <!-- PINOUT J7A -->
+        <!-- PINOUT SCSI -->
         <section id="pinout">
-            <h2><i class="fas fa-plug"></i> <span class="vi">Tra cứu Pin J7A (Full 100-Pin)</span><span class="en">J7A Pinout (Full 100-Pin)</span></h2>
+            <h2><i class="fas fa-plug"></i> <span class="vi">Tra cứu Pin SCSI (Full 100-Pin)</span><span class="en">SCSI Pinout (Full 100-Pin)</span></h2>
             <div class="notice notice-info">
-                <span class="vi">Sử dụng thanh tìm kiếm để tra cứu nhanh theo tên tín hiệu (VD: MDR, ENC, ISO).</span>
-                <span class="en">Use the search bar to find signals by name (e.g. MDR, ENC, ISO).</span>
+                <span class="vi">Sử dụng thanh tìm kiếm để tra cứu nhanh. Xem chi tiết tại <a href="SCSI_100Pin_Connector_Guide.html" target="_blank" style="color:var(--accent); text-decoration:underline;">Datasheet đầy đủ</a>.</span>
+                <span class="en">Use the search bar to find signals. See details in the <a href="SCSI_100Pin_Connector_Guide.html" target="_blank" style="color:var(--accent); text-decoration:underline;">Full Datasheet</a>.</span>
             </div>
             <div class="lang-switch" style="margin: 10px 0; background:none; padding:0">
                 <input type="text" id="pinSearch" placeholder="Search signals..." style="width:100%; padding:10px; border:1px solid var(--border); border-radius:6px">

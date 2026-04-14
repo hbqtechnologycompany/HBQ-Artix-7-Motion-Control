@@ -567,78 +567,7 @@
       <div class="lang-tab" onclick="switchLang('both')">🔀 Song ngữ</div>
     </div>
 
-    <!-- ===================== OVERVIEW ===================== -->
-    <div class="section">
-      <div class="section-title">⬡ Tổng quan connector / Overview</div>
 
-      <div class="lang-content active" id="vi-overview">
-        <p style="color:var(--text-secondary); font-size:12px; margin-bottom:12px;">
-          Connector SCSI là cổng I/O chính của card HBQ Artix-7 Motion Control Card, kết nối tất cả tín hiệu điều khiển
-          động cơ, encoder, analog, digital cách ly và truyền thông công nghiệp ra ngoài.
-          Đây là connector Hirose/TE 2×50 pin, pitch 2.54mm, có chốt khóa cơ học chống rung.
-        </p>
-      </div>
-      <div class="lang-content" id="en-overview">
-        <p style="color:var(--text-secondary); font-size:12px; margin-bottom:12px;">
-          Connector SCSI is the primary field I/O port of the HBQ Artix-7 Motion Control Card, bringing out all motor
-          control, encoder, analog, isolated digital, and industrial fieldbus signals to the field.
-          It is a 2×50 pin, 2.54mm pitch connector with mechanical locking tabs for vibration resistance.
-        </p>
-      </div>
-      <div class="lang-content" id="both-overview">
-        <p style="color:var(--text-secondary); font-size:12px; margin-bottom:12px;">
-          <strong style="color:var(--text-primary)">VI:</strong> Connector SCSI là cổng I/O chính của card HBQ PCIe
-          V2.0,
-          kết nối tất cả tín hiệu điều khiển động cơ, encoder, analog, digital cách ly và truyền thông công nghiệp ra
-          ngoài.<br>
-          <strong style="color:var(--text-primary)">EN:</strong> SCSI is the primary field I/O port, bringing out motor
-          control, encoder, analog, isolated digital, and industrial fieldbus signals.
-        </p>
-      </div>
-
-      <div class="overview-grid">
-        <div class="ov-card">
-          <div class="ov-label">Số chân / Total Pins</div>
-          <div class="ov-value" style="color:var(--accent-blue)">100</div>
-          <div class="ov-sub">2 hàng × 50 / 2 rows × 50</div>
-        </div>
-        <div class="ov-card">
-          <div class="ov-label">Điều khiển động cơ / Motor Control</div>
-          <div class="ov-value" style="color:var(--accent-cyan)">6 trục / axes</div>
-          <div class="ov-sub">PWM + DIR, RS-422 differential</div>
-        </div>
-        <div class="ov-card">
-          <div class="ov-label">Encoder</div>
-          <div class="ov-value" style="color:var(--accent-green)">6 trục / axes</div>
-          <div class="ov-sub">A/B/Z, RS-422 differential</div>
-        </div>
-        <div class="ov-card">
-          <div class="ov-label">Analog Input (ADC)</div>
-          <div class="ov-value" style="color:var(--accent-cyan)">8 kênh / ch</div>
-          <div class="ov-sub">16-bit, ±5V/±10V differential</div>
-        </div>
-        <div class="ov-card">
-          <div class="ov-label">Analog Output (DAC)</div>
-          <div class="ov-value" style="color:var(--accent-purple)">4 kênh / ch</div>
-          <div class="ov-sub">16-bit, buffered voltage out</div>
-        </div>
-        <div class="ov-card">
-          <div class="ov-label">Digital Cách ly / Isolated</div>
-          <div class="ov-value" style="color:var(--accent-yellow)">8DI + 8DO</div>
-          <div class="ov-sub">ISO7740, 2500 VRMS</div>
-        </div>
-        <div class="ov-card">
-          <div class="ov-label">CAN FD</div>
-          <div class="ov-value" style="color:var(--accent-red)">2 cổng / ports</div>
-          <div class="ov-sub">CAN1_P/N, CAN2_P/N</div>
-        </div>
-        <div class="ov-card">
-          <div class="ov-label">RS-485 / Modbus</div>
-          <div class="ov-value" style="color:var(--accent-orange)">2 cổng / ports</div>
-          <div class="ov-sub">Half-duplex, 120Ω term.</div>
-        </div>
-      </div>
-    </div>
 
     <!-- ===================== POWER PINS ===================== -->
     <div class="section">
@@ -742,52 +671,7 @@
       </div>
     </div>
 
-    <!-- ===================== SIGNAL GROUPS ===================== -->
-    <div class="section">
-      <div class="section-title">📊 Nhóm tín hiệu / Signal Groups</div>
-      <div class="group-summary">
-        <div class="group-card" style="--clr:#3fb950">
-          <div class="gc-title">🟢 Encoder Input (6 trục)</div>
-          <div class="gc-pins">Pins: 13–28 (Left) | 66–79 (Right)</div>
-          <div class="gc-desc">RS-422 differential · A+/A−/B+/B−/Z+/Z− · AM26LV32E receiver</div>
-        </div>
-        <div class="group-card" style="--clr:#388bfd">
-          <div class="gc-title">🔵 Motor PWM+DIR Output (6 trục)</div>
-          <div class="gc-pins">Pins: 5–12 (Left, ch1/3) | 57–65 (Right, ch2/4/5/6)</div>
-          <div class="gc-desc">RS-422 differential · PWM+DIR · AM26LV31E driver</div>
-        </div>
-        <div class="group-card" style="--clr:#39c5cf">
-          <div class="gc-title">🔷 Analog Input AI1–8</div>
-          <div class="gc-pins">Pins: 43–50 (Left, AI5–8) | 93–100 (Right, AI1–4)</div>
-          <div class="gc-desc">16-bit ADC · ±5V/±10V differential · AD7606C</div>
-        </div>
-        <div class="group-card" style="--clr:#bc8cff">
-          <div class="gc-title">🟣 Analog Output DAC1–4</div>
-          <div class="gc-pins">Pins: 88–91 (Right)</div>
-          <div class="gc-desc">16-bit buffered · DAC81404 + TL082 op-amp</div>
-        </div>
-        <div class="group-card" style="--clr:#d29922">
-          <div class="gc-title">🟡 Isolated Digital Input DI1–8</div>
-          <div class="gc-pins">Pins: 29–32 (Left, DI5–8) | 80–83 (Right, DI1–4)</div>
-          <div class="gc-desc">ISO7740 · 2500VRMS · cần cấp IN_ISOV+/GND</div>
-        </div>
-        <div class="group-card" style="--clr:#d29922">
-          <div class="gc-title">🟡 Isolated Digital Output DO1–8</div>
-          <div class="gc-pins">Pins: 37–40 (Left, DO1–4) | 84–87 (Right, DO5–8)</div>
-          <div class="gc-desc">ISO7740 · 2500VRMS · cần cấp OUT_ISOV+/GND</div>
-        </div>
-        <div class="group-card" style="--clr:#f85149">
-          <div class="gc-title">🔴 CAN FD (2 cổng)</div>
-          <div class="gc-pins">Pins: 53–56 (Right)</div>
-          <div class="gc-desc">CAN1_P/N, CAN2_P/N · SN65HVD230DR · 120Ω term</div>
-        </div>
-        <div class="group-card" style="--clr:#f0883e">
-          <div class="gc-title">🟠 RS-485 / Modbus (2 cổng)</div>
-          <div class="gc-pins">Pins: 1–4 (Left)</div>
-          <div class="gc-desc">MODBUS1 A/B, MODBUS2 A/B · ADM3065EARZ · 120Ω</div>
-        </div>
-      </div>
-    </div>
+
 
     <!-- ===================== FULL PINOUT TABLE ===================== -->
     <div class="section">
