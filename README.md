@@ -20,7 +20,7 @@
 | 8 | [Bộ nhớ](#8-bộ-nhớ--memory) | Memory |
 | 9 | [Kiến trúc nguồn](#9-kiến-trúc-nguồn--power-architecture) | Power Architecture |
 | 10 | [**Connector CN10 — Cấp nguồn Backplane**](#10-connector-cn10--backplane-power-supply) | CN10 Backplane Power |
-| 11 | [**Connector J7A — I/O 100 chân**](#11-connector-j7a--100-pin-field-io) | J7A 100-Pin I/O |
+| 11 | [**Connector SCSI — I/O 100 chân**](#11-connector-j7a--100-pin-field-io) | SCSI 100-Pin I/O |
 | 12 | [**Phân bổ chân FPGA (Pin Assignment)**](#12-phân-bổ-chân-fpga--fpga-pin-assignment) | FPGA Pin Assignment |
 | 13 | [Ứng dụng](#13-ứng-dụng--applications) | Applications |
 | 14 | [Sơ đồ khối](#14-sơ-đồ-khối--block-diagram) | Block Diagram |
@@ -140,7 +140,7 @@ Receiver: **AM26LV32E** × 6 IC · Termination: 120Ω on-board · Buffer: SN74LV
 
 | Trục / Axis | Kênh A / Ch A | Kênh B / Ch B | Index Z |
 |-------------|--------------|--------------|---------|
-| ENC 1 | ENC_1A± (J7A 26,27) | ENC_1B± (24,25) | ENC_1Z± (76,77) |
+| ENC 1 | ENC_1A± (SCSI 26,27) | ENC_1B± (24,25) | ENC_1Z± (76,77) |
 | ENC 2 | ENC_2A± (74,75) | ENC_2B± (22,23) | ENC_2Z± (20,21) |
 | ENC 3 | ENC_3A± (72,73) | ENC_3B± (70,71) | ENC_3Z± (18,19) |
 | ENC 4 | ENC_4A± (16,17) | ENC_4B± (68,69) | ENC_4Z± (66,67) |
@@ -152,7 +152,7 @@ Driver: **AM26LV31E** × 3 IC · ESD: NUP2105 TVS
 
 | Trục / Axis | PWM Output | DIR Output |
 |-------------|-----------|-----------|
-| Motor 1 | MDR_PWM1± (J7A 11,12) | MDR_DIR1± (9,10) |
+| Motor 1 | MDR_PWM1± (SCSI 11,12) | MDR_DIR1± (9,10) |
 | Motor 2 | MDR_PWM2± (64,65) | MDR_DIR2± (62,63) |
 | Motor 3 | MDR_PWM3± (7,8) | MDR_DIR3± (5,6) |
 | Motor 4 | MDR_PWM4± (60,61) | MDR_DIR4± (58,59) |
@@ -167,7 +167,7 @@ Cách ly qua / Isolated via: **ISO7740FDBQR** × 4 IC · 2500 VRMS · 150 Mbps
 
 ### Digital Input — 8 kênh / 8 channels (ISO_IN1–8)
 
-| Kênh / Ch | Chân J7A / J7A Pin | Nguồn cách ly / Iso Power |
+| Kênh / Ch | Chân SCSI / SCSI Pin | Nguồn cách ly / Iso Power |
 |-----------|-------------------|--------------------------|
 | ISO_IN1 | 83 | IN_ISOV+ (33) / IN_ISOGND (34) |
 | ISO_IN2 | 82 | IN_ISOV+ (33) / IN_ISOGND (34) |
@@ -180,7 +180,7 @@ Cách ly qua / Isolated via: **ISO7740FDBQR** × 4 IC · 2500 VRMS · 150 Mbps
 
 ### Digital Output — 8 kênh / 8 channels (ISO_OUT1–8)
 
-| Kênh / Ch | Chân J7A / J7A Pin | Nguồn cách ly / Iso Power |
+| Kênh / Ch | Chân SCSI / SCSI Pin | Nguồn cách ly / Iso Power |
 |-----------|-------------------|--------------------------|
 | ISO_OUT1 | 37 | OUT_ISOV+ (35) / OUT_ISOGND (36) |
 | ISO_OUT2 | 38 | OUT_ISOV+ (35) / OUT_ISOGND (36) |
@@ -200,14 +200,14 @@ Cách ly qua / Isolated via: **ISO7740FDBQR** × 4 IC · 2500 VRMS · 150 Mbps
 
 ### CAN FD — 2 cổng / 2 ports
 
-| Cổng / Port | Transceiver | Chân J7A / Pin | Điện trở cuối / Term. |
+| Cổng / Port | Transceiver | Chân SCSI / Pin | Điện trở cuối / Term. |
 |-------------|------------|----------------|----------------------|
 | CAN1 | SN65HVD230DR (U15) | CAN1_P=57, CAN1_N=56 | 120Ω R75 (on-board) |
 | CAN2 | SN65HVD230DR (U36) | CAN2_P=55, CAN2_N=54 | 120Ω R87 (on-board) |
 
 ### RS-485 / Modbus RTU — 2 cổng / 2 ports
 
-| Cổng / Port | Transceiver | Chân J7A / Pin | Điện trở cuối / Term. |
+| Cổng / Port | Transceiver | Chân SCSI / Pin | Điện trở cuối / Term. |
 |-------------|------------|----------------|----------------------|
 | Modbus 1 | ADM3065EARZ (U7) | MB1_A=4, MB1_B=3 | 120Ω R51 (on-board) |
 | Modbus 2 | ADM3065EARZ (U14) | MB2_A=2, MB2_B=1 | 120Ω R58 (on-board) |
@@ -229,7 +229,7 @@ Cách ly qua / Isolated via: **ISO7740FDBQR** × 4 IC · 2500 VRMS · 150 Mbps
 
 
 #### Nguồn cách ly cho I/O (Isolated I/O Power)
-Để sử dụng Digital Input/Output cách ly trên connector J7A, người dùng **bắt buộc** phải cấp nguồn ngoài (5–30V DC) vào các chân chuyên dụng:
+Để sử dụng Digital Input/Output cách ly trên connector SCSI, người dùng **bắt buộc** phải cấp nguồn ngoài (5–30V DC) vào các chân chuyên dụng:
 - **IN_ISOV+ / IN_ISOGND**: Cấp nguồn cho khối 8 DI.
 - **OUT_ISOV+ / OUT_ISOGND**: Cấp nguồn cho khối 8 DO.
 > ⚠️ **Lưu ý:** Hai khối này có GND cách ly hoàn toàn với nhau và với board chính.
@@ -331,7 +331,7 @@ Nguồn GND   (−) ──────── CN10 Pin 1 or 4 or 5 (GND)
 
 ---
 
-## 11. Connector J7A — 100-Pin Field I/O
+## 11. Connector SCSI — 100-Pin Field I/O
 
 **Part:** TE Connectivity **5787082-9** · 2×50 pin · Pitch 2.54mm · Có chốt khóa / with latch
 
@@ -421,7 +421,7 @@ Nguồn GND   (−) ──────── CN10 Pin 1 or 4 or 5 (GND)
 | **49** | `[ADC]` AI_IN5+ | `[ADC]` AI_IN4+ | **99** |
 | **50** | `[ADC]` AI_IN5− | `[ADC]` AI_IN4− | **100** |
 
-### 11.3 Đặc tính điện tín hiệu J7A / J7A Electrical Specs
+### 11.3 Đặc tính điện tín hiệu SCSI / SCSI Electrical Specs
 
 | Nhóm / Group | Kiểu tín hiệu / Signal Type | Mức điện áp / Levels | Ghi chú / Notes |
 |--------------|---------------------------|----------------------|-----------------|
@@ -434,11 +434,11 @@ Nguồn GND   (−) ──────── CN10 Pin 1 or 4 or 5 (GND)
 | CAN FD | Vi sai | CAN bus levels | ISO-11898 compliant |
 | RS-485 | Vi sai | RS-485 levels | Half-duplex, 120Ω term |
 
-### 11.3 Hướng dẫn nối dây J7A / J7A Wiring Guide
+### 11.3 Hướng dẫn nối dây SCSI / SCSI Wiring Guide
 
 #### ① Encoder RS-422
 ```
-Encoder (RS-422)          J7A Connector
+Encoder (RS-422)          SCSI Connector
     A+ ──────────────────── ENC_1A+ (pin 27)
     A− ──────────────────── ENC_1A− (pin 26)
     B+ ──────────────────── ENC_1B+ (pin 25)
@@ -452,7 +452,7 @@ Encoder (RS-422)          J7A Connector
 
 #### ② Motor Driver PWM+DIR (RS-422)
 ```
-Servo Drive (RS-422)      J7A Connector
+Servo Drive (RS-422)      SCSI Connector
   PULSE+ ─────────────── MDR_PWM1+ (pin 12)
   PULSE− ─────────────── MDR_PWM1− (pin 11)
    DIR+  ─────────────── MDR_DIR1+ (pin 10)
@@ -464,7 +464,7 @@ Servo Drive (RS-422)      J7A Connector
 
 #### ③ Analog Input ADC (16-bit differential)
 ```
-Sensor/Transmitter        J7A Connector
+Sensor/Transmitter        SCSI Connector
   Signal (+) ──────────── AI_IN1+  (pin 93)
   Signal (−) ──────────── AI_IN1−  (pin 94)
   AGND       ──────────── GND      (pin 92)  ← AGND chỉ ở 1 điểm / single-point AGND
@@ -474,7 +474,7 @@ Sensor/Transmitter        J7A Connector
 
 #### ④ Isolated Digital I/O (DI/DO cách ly)
 ```
-Nguồn PLC 24VDC           J7A Connector
+Nguồn PLC 24VDC           SCSI Connector
   24VDC (+) ───────────── IN_ISOV+   (pin 33)  ← Cấp nguồn DI / DI supply
   24VDC (−) ───────────── IN_ISOGND  (pin 34)
   Sensor NPN ──────────── ISO_IN1    (pin 83)
@@ -489,7 +489,7 @@ Nguồn PLC 24VDC           J7A Connector
 
 #### ⑤ CAN FD
 ```
-CAN Bus (RS-485 level)    J7A Connector
+CAN Bus (RS-485 level)    SCSI Connector
   CANH ────────────────── CAN1_P (pin 57)
   CANL ────────────────── CAN1_N (pin 56)
   GND  ────────────────── GND    (pin 92)
@@ -499,7 +499,7 @@ CAN Bus (RS-485 level)    J7A Connector
 
 #### ⑥ RS-485 / Modbus RTU
 ```
-RS-485 Device             J7A Connector
+RS-485 Device             SCSI Connector
     A (+) ───────────────── MODBUS1_A (pin 4)
     B (−) ───────────────── MODBUS1_B (pin 3)
    GND   ───────────────── GND        (pin 92)
